@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/vocabFragment"
-        android:name="com.torrydo.transeng.ui.mainAppScreen.vocabScreen.VocabFragment"
+        android:name="com.torrydo.transe.ui.mainAppScreen.vocabScreen.VocabFragment"
         android:label="fragment_vocab"
         tools:layout="@layout/fragment_vocab">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.torrydo.transeng.ui.mainAppScreen.settingScreen.SettingFragment"
+        android:name="com.torrydo.transe.ui.mainAppScreen.settingScreen.SettingFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_setting" />
 </navigation>
