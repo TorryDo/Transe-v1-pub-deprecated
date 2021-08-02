@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/itemVocabCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:backgroundTint="@color/theme_color"
+        app:cardCornerRadius="@dimen/rounded_corner_medium"
+        app:cardElevation="@dimen/elevation_medium"
+        android:layout_margin="@dimen/margin_medium"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/itemVocabTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="Vocabulary"
+        android:textSize="@dimen/text_bigger"
+        android:textColor="@color/text_color"
+        android:fontFamily="@font/quicksand_bold"
+        android:textStyle="bold"
+
+        android:layout_gravity="center"
+        android:elevation="@dimen/elevation_medium"
+        android:layout_margin="@dimen/margin_small"
+
+        app:layout_constraintTop_toTopOf="@id/itemVocabCard"
+        app:layout_constraintStart_toStartOf="@id/itemVocabCard"
+        app:layout_constraintEnd_toStartOf="@id/itemVocab3dots"
+        />
+
+    <View
+        android:id="@+id/itemVocabView1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/stroke_big"
+
+        android:backgroundTint="@color/black"
+        android:background="@drawable/custom_rounded_medium"
+        android:elevation="@dimen/elevation_medium"
+        android:layout_marginTop="@dimen/margin_smallest"
+        android:layout_marginEnd="@dimen/margin_supreme_small"
+
+        app:layout_constraintHorizontal_weight="0"
+        app:layout_constraintTop_toBottomOf="@id/itemVocabTitle"
+        app:layout_constraintStart_toStartOf="@id/itemVocabTitle"
+        app:layout_constraintEnd_toStartOf="@id/itemVocabView2"
+        />
+    <View
+        android:id="@+id/itemVocabView2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/stroke_big"
+
+        android:backgroundTint="@color/black"
+        android:background="@drawable/custom_rounded_medium"
+        android:elevation="@dimen/elevation_medium"
+        android:layout_marginTop="@dimen/margin_smallest"
+        android:layout_marginEnd="@dimen/margin_supreme_small"
+
+        app:layout_constraintHorizontal_weight="0"
+        app:layout_constraintTop_toBottomOf="@id/itemVocabTitle"
+        app:layout_constraintStart_toEndOf="@id/itemVocabView1"
+        app:layout_constraintEnd_toStartOf="@id/itemVocabView3"
+        />
+    <View
+        android:id="@+id/itemVocabView3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/stroke_big"
+
+        android:backgroundTint="@color/black"
+        android:background="@drawable/custom_rounded_medium"
+        android:elevation="@dimen/elevation_medium"
+        android:layout_marginTop="@dimen/margin_smallest"
+
+        app:layout_constraintHorizontal_weight="0"
+        app:layout_constraintTop_toBottomOf="@id/itemVocabTitle"
+        app:layout_constraintEnd_toEndOf="@id/itemVocabTitle"
+        app:layout_constraintStart_toEndOf="@id/itemVocabView2"
+        />
+
+    <ImageView
+        android:id="@+id/itemVocab3dots"
+        android:layout_width="@dimen/icon_smaller"
+        android:layout_height="@dimen/icon_smaller"
+
+        android:src="@drawable/ic_3dots_vertical"
+
+        android:layout_marginEnd="@dimen/margin_big"
+        android:elevation="@dimen/margin_medium"
+
+        app:layout_constraintTop_toTopOf="@id/itemVocabTitle"
+        app:layout_constraintBottom_toBottomOf="@id/itemVocabTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/itemVocabContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:text="this is an example"
+        android:textColor="@color/main_color_darker"
+        android:textSize="@dimen/text_small"
+
+        android:layout_margin="@dimen/margin_small"
+        android:elevation="@dimen/elevation_medium"
+
+        app:layout_constraintTop_toBottomOf="@id/itemVocabView1"
+        app:layout_constraintStart_toStartOf="@id/itemVocabCard"
+        app:layout_constraintEnd_toEndOf="@id/itemVocabCard"
+        app:layout_constraintBottom_toBottomOf="@id/itemVocabCard"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/vocabFragment">
+
+    <fragment
+        android:id="@+id/vocabFragment"
+        android:name="com.torrydo.transeng.ui.mainAppScreen.vocabScreen.VocabFragment"
+        android:label="fragment_vocab"
+        tools:layout="@layout/fragment_vocab">
+        <action
+            android:id="@+id/action_vocabFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.torrydo.transeng.ui.mainAppScreen.settingScreen.SettingFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_setting" />
+</navigation>

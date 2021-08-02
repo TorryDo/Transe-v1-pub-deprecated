@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/padding_small">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/chip_1"
+        android:layout_width="@dimen/chip_width"
+        android:layout_height="@dimen/chip_height"
+
+        android:text="@string/viewtrans_option1"
+        android:textColor="@color/text_color_reversed"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="@dimen/text_medium"
+
+        android:background="@drawable/custom_option_button_focused"
+        android:layout_marginEnd="@dimen/margin_small"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chip_2"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/chip_2"
+        android:layout_width="@dimen/chip_width"
+        android:layout_height="@dimen/chip_height"
+
+        android:text="@string/viewtrans_option3"
+        android:textColor="@color/text_color_reversed"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="@dimen/text_medium"
+
+        android:background="@drawable/custom_option_button_unfocused"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+
+        app:layout_constraintStart_toEndOf="@id/chip_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/chip_star"
+        android:layout_width="@dimen/icon_bigger"
+        android:layout_height="0dp"
+
+        app:lottie_rawRes="@raw/lottie_star"
+        android:layout_marginEnd="@dimen/margin_smallest"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

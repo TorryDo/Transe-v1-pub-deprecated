@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TransEng</string>
+
+    <string name="edittext_hint_search">Eng - Eng</string>
+
+    <string name="examples">Examples</string>
+
+    <!--    view trans-->
+    <string name="viewtrans_option1">Eng</string>
+    <string name="viewtrans_option2">Vi</string>
+    <string name="viewtrans_option3">Image</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

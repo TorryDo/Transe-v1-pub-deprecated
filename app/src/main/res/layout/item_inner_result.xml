@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/itemInnerResultTxtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="click me"
+        android:textSize="@dimen/text_medium"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/main_color_darker"
+        android:layout_marginHorizontal="@dimen/margin_small"
+
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/itemInnerResultButtonExamples"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/view_trans_expandable_button_height"
+
+        android:text="@string/examples"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/grey"
+        android:background="@drawable/custom_expandable_button"
+        android:paddingHorizontal="@dimen/padding_big"
+        android:layout_marginVertical="@dimen/margin_smaller"
+        android:fontFamily="@font/quicksand_medium"
+        android:elevation="@null"
+
+        app:layout_constraintTop_toBottomOf="@id/itemInnerResultTxtTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/itemInnerResultTxtContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="content"
+        android:textSize="@dimen/text_medium"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/grey"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_smallest"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@id/itemInnerResultTxtTitle"
+        app:layout_constraintStart_toStartOf="@id/itemInnerResultTxtTitle"
+        app:layout_constraintEnd_toEndOf="@id/itemInnerResultTxtTitle"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
