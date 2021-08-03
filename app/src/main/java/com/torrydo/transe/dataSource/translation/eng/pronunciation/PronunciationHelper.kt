@@ -1,7 +1,7 @@
-package com.torrydo.transe.dataSource.data.eng.pronunciation
+package com.torrydo.transe.dataSource.translation.eng.pronunciation
 
 import android.content.Context
-import com.torrydo.transe.dataSource.data.eng.pronunciation.models.Pronunciation
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

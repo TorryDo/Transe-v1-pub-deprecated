@@ -3,7 +3,7 @@ package com.torrydo.transe.di
 import android.content.Context
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
-import com.torrydo.transe.dataSource.data.eng.pronunciation.PronunciationHelper
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

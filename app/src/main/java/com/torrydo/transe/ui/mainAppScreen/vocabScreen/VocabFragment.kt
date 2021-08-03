@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.adapter.holderClass.VocabHolder
-import com.torrydo.transe.dataSource.data.eng.pronunciation.PronunciationHelper
-import com.torrydo.transe.dataSource.data.eng.pronunciation.models.Pronunciation
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.databinding.FragmentVocabBinding
 import com.torrydo.transe.databinding.ItemVocabBinding
@@ -87,6 +87,10 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
 
     private fun observeLiveData() {
         mViewModel.resultList.observe(viewLifecycleOwner, {
+            if (vocabList.isNotEmpty()) {
+                vocabList.clear()
+            }
+            vocabList.addAll(it)
             mAdapterVocab?.apply {
                 setItems(it)
             }

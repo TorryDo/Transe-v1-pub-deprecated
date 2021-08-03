@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import android.view.WindowManager
-import com.torrydo.transe.dataSource.data.SearchRepositoryImpl
+import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.Converter

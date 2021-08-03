@@ -1,10 +1,10 @@
-package com.torrydo.transe.dataSource.data.eng
+package com.torrydo.transe.dataSource.translation.eng
 
-import com.torrydo.transe.dataSource.data.MyJsoupHelper
+import com.torrydo.transe.dataSource.translation.MyJsoupHelper
 import com.torrydo.transe.interfaces.ListResultListener
-import com.torrydo.transe.dataSource.data.eng.models.InnerEngResult
-import com.torrydo.transe.dataSource.data.eng.models.EngResult
-import com.torrydo.transe.dataSource.data.eng.pronunciation.models.Pronunciation
+import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
+import com.torrydo.transe.dataSource.translation.eng.models.EngResult
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import com.torrydo.transe.interfaces.RequestListener
 import com.torrydo.transe.utils.MyThreadHelper
 import org.jsoup.nodes.Document

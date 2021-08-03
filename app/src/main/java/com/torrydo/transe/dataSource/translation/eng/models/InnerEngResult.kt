@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.data.eng.models
+package com.torrydo.transe.dataSource.translation.eng.models
 
 data class InnerEngResult (
     val title : String,

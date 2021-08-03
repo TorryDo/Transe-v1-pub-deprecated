@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.databinding.ItemInnerResultBinding
-import com.torrydo.transe.dataSource.data.eng.models.InnerEngResult
+import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
 
 class InnerResultHolder(
     private val binding: ItemInnerResultBinding

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "625949016122",
+    "firebase_url": "https://transe-392-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "transe-392",
+    "storage_bucket": "transe-392.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625949016122:android:def23fbad112f126493503",
+        "android_client_info": {
+          "package_name": "com.torrydo.transe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625949016122-bsg3a9vjueo54gul96moqfo9u552kd1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.torrydo.transe",
+            "certificate_hash": "a86b898537c3e7958c7192aa10729596f57ccbaa"
+          }
+        },
+        {
+          "client_id": "625949016122-ler37ccckc5boad64ij95af8klufgc85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJvgvQ1KPm7j9j_FIJj3Q-rjRdwQHdj6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625949016122-ler37ccckc5boad64ij95af8klufgc85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

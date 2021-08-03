@@ -3,7 +3,10 @@ package com.torrydo.transe.di
 import android.content.Context
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
+import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
+import com.torrydo.transe.dataSource.database.RemoteDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
+import com.torrydo.transe.dataSource.database.remote.FirebaseDaoImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +34,11 @@ object ViewModelModule {
     @Provides
     @Named("viewModelString")
     fun provideString() = "I am providing a string"
+
+    @ViewModelScoped
+    @Provides
+    @Named("viewModelRemoteDatabase")
+    fun provideRemoteDatabase(): RemoteDatabaseRepository =
+        RemoteDatabaseRepositoryImpl(FirebaseDaoImpl())
 
 }

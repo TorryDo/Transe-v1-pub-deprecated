@@ -4,6 +4,7 @@ plugins {
 
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -68,6 +69,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     // -------------------------- Activity Component ----------------------------------
     implementation "androidx.activity:activity-ktx:1.3.0"    // p/s : need for calling viewmodels()
+
+    // ------------------------------- Firebase ---------------------------------------
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
 
     // ---------------------------- Room components -----------------------------------

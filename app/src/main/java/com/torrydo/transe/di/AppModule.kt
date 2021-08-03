@@ -1,11 +1,11 @@
 package com.torrydo.transe.di
 
 import android.content.Context
-import com.torrydo.transe.dataSource.data.SearchRepository
+import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
-import com.torrydo.transe.dataSource.data.SearchRepositoryImpl
-import com.torrydo.transe.dataSource.data.eng.EngSearchImpl
+import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
+import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import dagger.Module
 import dagger.Provides

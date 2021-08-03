@@ -3,8 +3,8 @@ package com.torrydo.transe.dataSource.database.local.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.torrydo.transe.dataSource.data.eng.models.EngResult
-import com.torrydo.transe.dataSource.data.vi.ViResult
+import com.torrydo.transe.dataSource.translation.eng.models.EngResult
+import com.torrydo.transe.dataSource.translation.vi.ViResult
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import java.sql.Date
 

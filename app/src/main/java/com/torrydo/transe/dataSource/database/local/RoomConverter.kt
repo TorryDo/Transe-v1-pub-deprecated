@@ -3,8 +3,8 @@ package com.torrydo.transe.dataSource.database.local
 import androidx.room.TypeConverter
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Types
-import com.torrydo.transe.dataSource.data.eng.models.EngResult
-import com.torrydo.transe.dataSource.data.vi.ViResult
+import com.torrydo.transe.dataSource.translation.eng.models.EngResult
+import com.torrydo.transe.dataSource.translation.vi.ViResult
 import com.torrydo.transe.utils.CONSTANT
 import java.sql.Date
 

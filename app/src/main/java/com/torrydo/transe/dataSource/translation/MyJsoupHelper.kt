@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.data
+package com.torrydo.transe.dataSource.translation
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

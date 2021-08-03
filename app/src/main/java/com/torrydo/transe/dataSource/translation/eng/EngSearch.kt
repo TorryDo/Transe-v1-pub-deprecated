@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.data.eng
+package com.torrydo.transe.dataSource.translation.eng
 
 import com.torrydo.transe.interfaces.ListResultListener
 

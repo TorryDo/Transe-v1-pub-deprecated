@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.data.eng.pronunciation
+package com.torrydo.transe.dataSource.translation.eng.pronunciation
 
 import com.torrydo.transe.interfaces.RequestListener
 import java.io.File

@@ -13,8 +13,8 @@ import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.databinding.ItemInnerResultBinding
 import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.interfaces.VocabListenter
-import com.torrydo.transe.dataSource.data.eng.models.InnerEngResult
-import com.torrydo.transe.dataSource.data.eng.models.EngResult
+import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
+import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 
 class ResultHolder(
     private val binding: ItemResultBinding,

@@ -1,7 +1,7 @@
 package com.torrydo.transe.interfaces
 
 import com.torrydo.transe.dataSource.database.local.models.Vocab
-import com.torrydo.transe.dataSource.data.eng.pronunciation.models.Pronunciation
+import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 
 interface VocabListenter {
 
