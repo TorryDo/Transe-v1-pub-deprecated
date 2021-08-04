@@ -6,15 +6,21 @@ import android.view.View
 import android.widget.PopupMenu
 
 class MyPopupMenuHelper(
-    val context: Context,
-    val deleteThis: () -> Unit  // change later
+    val context: Context
 ) {
 
-    fun show(view: View) {
+    fun show(
+        view: View,
+        stringList: List<String>,
+        clickAtPosition: (clickAt: Int) -> Unit
+    ) {
         var popupMenu: PopupMenu? = PopupMenu(view.context, view)
         var menu: Menu? = popupMenu!!.menu
 
-        menu?.add(0, 1, 0, "delete")
+        for (i in stringList.indices) {
+            menu?.add(0, i, 0, stringList[i])
+        }
+
 
         popupMenu.setOnDismissListener {
             popupMenu = null
@@ -22,16 +28,12 @@ class MyPopupMenuHelper(
         }
 
         popupMenu?.setOnMenuItemClickListener {
-            when (it.itemId) {
-                1 -> {
-//                                onClickAt.onClickAt(view, vocabHolder.layoutPosition)
-                    deleteThis()
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+            clickAtPosition(it.itemId)
+
+            popupMenu = null
+            menu = null
+            false
+
         }
         popupMenu?.show()
     }

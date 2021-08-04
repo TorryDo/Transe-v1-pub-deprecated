@@ -4,6 +4,7 @@ import android.content.Context
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
+import com.torrydo.transe.utils.MyPopupMenuHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +17,13 @@ import javax.inject.Named
 @InstallIn(ActivityComponent::class)
 @Named("activityModule")
 object ActivityModule {
+
+    @ActivityScoped
+    @Provides
+    @Named("activityPopupMenuHelper")
+    fun providePopupMenuHelper(
+        @ApplicationContext context: Context
+    ) = MyPopupMenuHelper(context)
 
     @ActivityScoped
     @Provides

@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.adapter.holderClass.VocabHolder
+import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
-import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.databinding.FragmentVocabBinding
 import com.torrydo.transe.databinding.ItemVocabBinding
 import com.torrydo.transe.interfaces.VocabListenter
 import com.torrydo.transe.service.searchService.LauncherSearchService
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.utils.CONSTANT
+import com.torrydo.transe.utils.MyPopupMenuHelper
 import com.torrydo.transe.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,6 +32,10 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
     @Inject
     @Named("activityPronunciationHelper")
     lateinit var pronunciationHelper: PronunciationHelper
+
+    @Inject
+    @Named("activityPopupMenuHelper")
+    lateinit var popupMenuHelper: MyPopupMenuHelper
 
     private val mViewModel: VocabViewModel by viewModels()
 
@@ -78,11 +83,34 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
 
     }
 
+
     private fun requestOnCLick() {
         binding.vocabMainButton.setOnClickListener {
             startService()
             requireActivity().finish()
         }
+
+        binding.vocabRecycler3dots.setOnClickListener { v ->
+            popupMenuHelper.show(
+                v,
+                listOf(
+                    "Sync"  // 0
+                )
+            ) { position ->
+                when (position) {
+                    0 -> {
+                        viewModel.getUserID()?.let { uid ->
+                            Utils.showLongToast(requireContext(), uid)
+                            viewModel.resultList.value?.let { vocabList ->
+                                viewModel.insertAllToRemoteDatabase(vocabList)
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     private fun observeLiveData() {

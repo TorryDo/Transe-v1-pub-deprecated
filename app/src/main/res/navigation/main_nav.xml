@@ -12,11 +12,20 @@
         tools:layout="@layout/fragment_vocab">
         <action
             android:id="@+id/action_vocabFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/settingFragment"
         android:name="com.torrydo.transe.ui.mainAppScreen.settingScreen.SettingFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.torrydo.transe.ui.mainAppScreen.signinScreen.ProfileFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

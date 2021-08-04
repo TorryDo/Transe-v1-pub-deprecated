@@ -5,6 +5,8 @@ import com.torrydo.transe.interfaces.ResultListener
 
 interface RemoteDao {
 
+    fun setUserID(uid: String)
+
     fun getAllVocab(listResultListener: ListResultListener)
 
     fun insert(remoteVocab: RemoteVocab, resultListener: ResultListener?)

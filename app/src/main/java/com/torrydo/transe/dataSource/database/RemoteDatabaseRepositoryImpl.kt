@@ -6,8 +6,13 @@ import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
 
 class RemoteDatabaseRepositoryImpl(
-    val remoteDao: RemoteDao
+    private val remoteDao: RemoteDao
 ) : RemoteDatabaseRepository {
+
+
+    override suspend fun setUserID(uid: String) = remoteDao.setUserID(uid)
+
+
     override suspend fun insert(remoteVocab: RemoteVocab, resultListener: ResultListener?) {
         remoteDao.insert(remoteVocab, resultListener)
     }
@@ -15,9 +20,8 @@ class RemoteDatabaseRepositoryImpl(
     override suspend fun insertAll(
         listRemoteVocab: List<RemoteVocab>,
         resultListener: ResultListener?
-    ) {
-        remoteDao.insertAll(listRemoteVocab, resultListener)
-    }
+    ) = remoteDao.insertAll(listRemoteVocab, resultListener)
+
 
     override suspend fun update(remoteVocab: RemoteVocab, resultListener: ResultListener?) {
         remoteDao.update(remoteVocab, resultListener)

@@ -7,6 +7,9 @@ import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.database.remote.FirebaseDaoImpl
+import com.torrydo.transe.dataSource.signin.FirebaseAuthenticationMethod
+import com.torrydo.transe.dataSource.signin.AuthenticationMethod
+import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,27 +20,28 @@ import javax.inject.Named
 
 @Module
 @InstallIn(ViewModelComponent::class)
-@Named("viewModelModule")
+@Named(CONSTANT.viewModelModule)
 object ViewModelModule {
-
 
     @ViewModelScoped
     @Provides
-    @Named("viewModelDbRepo")
+    @Named(CONSTANT.viewModelLocalDB)
     fun provideDatabaseRepository(
         @ApplicationContext context: Context
     ): LocalDatabaseRepository = LocalDatabaseRepositoryImpl(
-        vocabDao = MyRoomDatabase.getMyRoomDatabase(context).vocabDao()
+        MyRoomDatabase.getMyRoomDatabase(context).vocabDao()
     )
 
     @ViewModelScoped
     @Provides
-    @Named("viewModelString")
-    fun provideString() = "I am providing a string"
+    @Named(CONSTANT.viewModelAuth)
+    fun provideSignIn(
+        @ApplicationContext context: Context
+    ): AuthenticationMethod = FirebaseAuthenticationMethod(context)
 
     @ViewModelScoped
     @Provides
-    @Named("viewModelRemoteDatabase")
+    @Named(CONSTANT.viewModelRemoteDB)
     fun provideRemoteDatabase(): RemoteDatabaseRepository =
         RemoteDatabaseRepositoryImpl(FirebaseDaoImpl())
 

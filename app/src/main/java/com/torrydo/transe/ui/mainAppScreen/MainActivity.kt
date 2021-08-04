@@ -1,6 +1,7 @@
 package com.torrydo.transe.ui.mainAppScreen
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.torrydo.transe.R
@@ -9,9 +10,11 @@ import com.torrydo.transe.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
-    override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+    private val vMainVM: MainViewModel by viewModels()
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
+    override fun getViewModelClass() = vMainVM
 
     override fun configOnCreate(savedInstanceState: Bundle?) {
 
@@ -22,6 +25,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
     }
-
 
 }

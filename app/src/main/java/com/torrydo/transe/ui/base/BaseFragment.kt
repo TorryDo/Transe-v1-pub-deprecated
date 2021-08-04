@@ -1,5 +1,6 @@
 package com.torrydo.transe.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +17,17 @@ abstract class BaseFragment<VM : ViewModel, B : ViewBinding> : Fragment() {
     abstract fun getViewModelClass(): VM
     abstract fun getViewBinding(): B
 
+
     abstract fun configOnCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = getViewModelClass()
+    }
 
 
     override fun onCreateView(
@@ -28,9 +35,7 @@ abstract class BaseFragment<VM : ViewModel, B : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = getViewModelClass()
         binding = getViewBinding()
-
         configOnCreateView(inflater, container, savedInstanceState)
 
         return binding.root

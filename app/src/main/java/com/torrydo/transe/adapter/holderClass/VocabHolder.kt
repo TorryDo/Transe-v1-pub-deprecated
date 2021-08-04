@@ -5,12 +5,12 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.databinding.ItemVocabBinding
 import com.torrydo.transe.interfaces.VocabListenter
+import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyPopupMenuHelper
 
 class VocabHolder(
@@ -20,15 +20,25 @@ class VocabHolder(
     RecyclerView.ViewHolder(viewBinding.root),
     GenericAdapter.Binder<Vocab> {
 
+    val popUpHelper = MyPopupMenuHelper(viewBinding.root.context)
+
     private fun requestOnClick(item: Vocab) {
         viewBinding.itemVocabTitle.setOnClickListener { view ->
             vocabListenter.playPronunciation(item.contentEng[0].pronunciation)
         }
 
         viewBinding.itemVocab3dots.setOnClickListener { view ->
-            MyPopupMenuHelper(viewBinding.root.context) {
-                vocabListenter.delete(item)
-            }.show(view)
+
+            popUpHelper.show(
+                view,
+                listOf(
+                    "Delete",  // 0
+                )
+            ) { position ->
+                when (position) {
+                    0 -> vocabListenter.delete(item)
+                }
+            }
 
         }
     }

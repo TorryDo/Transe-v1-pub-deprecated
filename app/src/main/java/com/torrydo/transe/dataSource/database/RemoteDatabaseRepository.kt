@@ -6,6 +6,8 @@ import com.torrydo.transe.interfaces.ResultListener
 
 interface RemoteDatabaseRepository {
 
+    suspend fun setUserID(uid: String)
+
     suspend fun insert(remoteVocab: RemoteVocab, resultListener: ResultListener?)
 
     suspend fun insertAll(listRemoteVocab: List<RemoteVocab>, resultListener: ResultListener?)
