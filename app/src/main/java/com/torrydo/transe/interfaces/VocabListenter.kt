@@ -11,6 +11,6 @@ interface VocabListenter {
 
     fun update(vocab: Vocab){}
 
-    fun playPronunciation(pronunciation: Pronunciation){}
+    fun playPronunciation(keyWord: String, pronunciation: Pronunciation){}
 
 }

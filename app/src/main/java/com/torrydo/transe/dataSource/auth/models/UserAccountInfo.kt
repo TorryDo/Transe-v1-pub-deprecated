@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.signin.models
+package com.torrydo.transe.dataSource.auth.models
 
 data class UserAccountInfo(
     val uid: String,

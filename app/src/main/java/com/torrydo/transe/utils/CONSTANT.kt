@@ -5,6 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 object CONSTANT {
 
+    var KeyWord_Holder = ""
 
     val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())

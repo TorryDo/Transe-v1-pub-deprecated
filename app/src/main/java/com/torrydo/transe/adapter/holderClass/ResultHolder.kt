@@ -4,17 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
+import com.torrydo.transe.dataSource.translation.eng.models.EngResult
+import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
 import com.torrydo.transe.databinding.ItemInnerResultBinding
 import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.interfaces.VocabListenter
-import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
+import com.torrydo.transe.utils.CONSTANT
 
 class ResultHolder(
     private val binding: ItemResultBinding,
@@ -25,7 +26,10 @@ class ResultHolder(
 
     private fun requestOnClick(item: EngResult) {
         binding.itemResultAudio.setOnClickListener {
-            vocabListenter.playPronunciation(item.pronunciation)
+            vocabListenter.playPronunciation(
+                CONSTANT.KeyWord_Holder,
+                item.pronunciation
+            )
         }
     }
 

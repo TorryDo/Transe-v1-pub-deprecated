@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
@@ -18,6 +20,7 @@ import com.torrydo.transe.databinding.ItemVocabBinding
 import com.torrydo.transe.interfaces.VocabListenter
 import com.torrydo.transe.service.searchService.LauncherSearchService
 import com.torrydo.transe.ui.base.BaseFragment
+import com.torrydo.transe.ui.mainAppScreen.MainViewModel
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyPopupMenuHelper
 import com.torrydo.transe.utils.Utils
@@ -37,10 +40,11 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
     @Named(CONSTANT.activityPopupMenuHelper)
     lateinit var popupMenuHelper: MyPopupMenuHelper
 
+    private val activityViewModel: MainViewModel by activityViewModels()
     private val mViewModel: VocabViewModel by viewModels()
 
     private var mAdapterVocab: GenericAdapter<Vocab>? = null
-    private var vocabList: ArrayList<Vocab> = ArrayList()
+    private var mVocabList: ArrayList<Vocab> = ArrayList()
 
     override fun getViewModelClass() = mViewModel
     override fun getViewBinding(): FragmentVocabBinding =
@@ -58,7 +62,7 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
 
     private fun setup() {
 
-        mAdapterVocab = object : GenericAdapter<Vocab>(vocabList) {
+        mAdapterVocab = object : GenericAdapter<Vocab>(mVocabList) {
             override fun getLayoutId(position: Int, obj: Vocab): Int {
                 return R.layout.item_vocab
             }
@@ -96,35 +100,41 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
                 listOf(
                     "Upload",  // 0
                     "Sync",    // 1
+                    "Shuffe",  // 2
                 )
             ) { position ->
                 when (position) {
                     0 -> {
                         Utils.showLongToast(requireContext(), "updating to remoteDatabase")
-                        viewModel.resultList.value?.let { vocabList ->
+                        activityViewModel.vocabList.value?.let { vocabList ->
                             viewModel.insertAllToRemoteDatabase(vocabList)
 
                         }
                     }
                     1 -> {
-                        viewModel.syncAllVocabFromRemoteDatabase()
+                        Utils.showLongToast(requireContext(), "syncing")
+                        viewModel.syncAllVocabFromRemoteDatabase(activityViewModel.vocabList.value)
+                    }
+                    2 -> {
+                        Utils.showLongToast(requireContext(), "not yet implement")
+
                     }
                 }
             }
         }
-
     }
 
     private fun observeLiveData() {
-        mViewModel.resultList.observe(viewLifecycleOwner, {
-            if (vocabList.isNotEmpty()) {
-                vocabList.clear()
-            }
-            vocabList.addAll(it)
-            mAdapterVocab?.apply {
-                setItems(it)
-            }
-        })
+        activityViewModel.vocabList.observe(viewLifecycleOwner, vocabListObserver)
+    }
+    private val vocabListObserver = Observer<List<Vocab>>{
+        if (mVocabList.isNotEmpty()) {
+            mVocabList.clear()
+        }
+        mVocabList.addAll(it)
+        mAdapterVocab?.apply {
+            setItems(it)
+        }
     }
 
     private fun startService() {
@@ -140,12 +150,13 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
 
     private inner class MyVocabListener : VocabListenter {
         override fun delete(vocab: Vocab) {
-            mViewModel.deleteVocab(vocab)
+            activityViewModel.deleteVocab(vocab)
             Utils.showShortToast(requireContext(), "deleting")
         }
 
-        override fun playPronunciation(pronunciation: Pronunciation) {
-            pronunciationHelper.playAudio(pronunciation)
+        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
+
+            pronunciationHelper.playAudio(keyWord, pronunciation)
         }
     }
 

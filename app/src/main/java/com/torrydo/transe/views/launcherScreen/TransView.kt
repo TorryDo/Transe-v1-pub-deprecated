@@ -26,6 +26,7 @@ import com.torrydo.transe.databinding.ViewTransBinding
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.RequestListener
 import com.torrydo.transe.interfaces.VocabListenter
+import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyThreadHelper
 import com.torrydo.transe.utils.Utils
 import com.torrydo.transe.views.base.HomeLauncherBaseView
@@ -160,7 +161,9 @@ class TransView(
                     if (dataList[0] is EngResult) {
                         engResultList = dataList as ArrayList<EngResult>
                         adapterEng?.setItems(dataList)
-                        Log.d(TAG, "finished")
+
+                        CONSTANT.KeyWord_Holder = keyWord
+
                     } else {
                         Log.d(TAG, "doesn't match condition")
                     }
@@ -266,8 +269,8 @@ class TransView(
     }
 
     private inner class MyVocabListener : VocabListenter {
-        override fun playPronunciation(pronunciation: Pronunciation) {
-            pronunciationHelper.playAudio(pronunciation)
+        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
+            pronunciationHelper.playAudio(keyWord, pronunciation)
         }
     }
 

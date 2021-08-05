@@ -1,8 +1,8 @@
 package com.torrydo.transe.di
 
 import android.content.Context
-import com.torrydo.transe.dataSource.signin.FirebaseAuthenticationMethod
-import com.torrydo.transe.dataSource.signin.AuthenticationMethod
+import com.torrydo.transe.dataSource.auth.FirebaseAuthenticationMethod
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides

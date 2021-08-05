@@ -1,6 +1,6 @@
-package com.torrydo.transe.dataSource.signin
+package com.torrydo.transe.dataSource.auth
 
-import com.torrydo.transe.dataSource.signin.models.UserAccountInfo
+import com.torrydo.transe.dataSource.auth.models.UserAccountInfo
 
 interface AuthenticationMethod {
 

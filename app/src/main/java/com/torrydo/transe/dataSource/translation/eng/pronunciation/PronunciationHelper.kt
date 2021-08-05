@@ -11,13 +11,14 @@ class PronunciationHelper(
 ) {
 
     fun playAudio(
+        keyWord: String,
         pronunciation: Pronunciation
     ) {
         GlobalScope.launch(Dispatchers.IO) {
             PronunciationAudioImpl(
                 context,
                 pronunciation.url
-            ).play(pronunciation.text)
+            ).play(keyWord)
         }
     }
 

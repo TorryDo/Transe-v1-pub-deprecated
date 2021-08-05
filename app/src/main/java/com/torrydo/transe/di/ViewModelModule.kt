@@ -7,8 +7,8 @@ import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.database.remote.FirebaseDaoImpl
-import com.torrydo.transe.dataSource.signin.FirebaseAuthenticationMethod
-import com.torrydo.transe.dataSource.signin.AuthenticationMethod
+import com.torrydo.transe.dataSource.auth.FirebaseAuthenticationMethod
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
@@ -20,7 +20,6 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)

@@ -2,9 +2,8 @@ package com.torrydo.transe.ui.mainAppScreen.settingScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.torrydo.transe.dataSource.signin.AuthenticationMethod
-import com.torrydo.transe.dataSource.signin.models.UserAccountInfo
-import com.torrydo.transe.di.ViewModelModule
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
+import com.torrydo.transe.dataSource.auth.models.UserAccountInfo
 import com.torrydo.transe.utils.CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

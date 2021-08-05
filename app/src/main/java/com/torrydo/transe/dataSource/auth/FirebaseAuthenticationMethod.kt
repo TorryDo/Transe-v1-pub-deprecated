@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.signin
+package com.torrydo.transe.dataSource.auth
 
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -6,7 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.torrydo.transe.R
-import com.torrydo.transe.dataSource.signin.models.UserAccountInfo
+import com.torrydo.transe.dataSource.auth.models.UserAccountInfo
 
 class FirebaseAuthenticationMethod(
     val context: Context

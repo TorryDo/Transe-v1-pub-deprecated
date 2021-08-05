@@ -24,7 +24,7 @@ class VocabHolder(
 
     private fun requestOnClick(item: Vocab) {
         viewBinding.itemVocabTitle.setOnClickListener { view ->
-            vocabListenter.playPronunciation(item.contentEng[0].pronunciation)
+            vocabListenter.playPronunciation(item.vocab, item.contentEng[0].pronunciation)
         }
 
         viewBinding.itemVocab3dots.setOnClickListener { view ->

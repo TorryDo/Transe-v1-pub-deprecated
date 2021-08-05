@@ -9,7 +9,7 @@ import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.database.remote.BaseVocab
-import com.torrydo.transe.dataSource.signin.AuthenticationMethod
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.interfaces.ListResultListener
@@ -33,19 +33,6 @@ class VocabViewModel @Inject constructor(
 
     private val TAG = "_TAG_FirebaseDaoImpl"
 
-    var resultList: LiveData<List<Vocab>> = MutableLiveData()
-
-    init {
-        viewModelScope.launch {
-            resultList = localDatabaseRepository.getAll()
-        }
-    }
-
-    fun deleteVocab(vocab: Vocab) {
-        viewModelScope.launch(Dispatchers.IO) {
-            localDatabaseRepository.delete(vocab)
-        }
-    }
 
     fun insertAllToRemoteDatabase(vocabList: List<Vocab>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -66,7 +53,7 @@ class VocabViewModel @Inject constructor(
         }
     }
 
-    fun syncAllVocabFromRemoteDatabase() {
+    fun syncAllVocabFromRemoteDatabase(vocabList: List<Vocab>?) {
         viewModelScope.launch(Dispatchers.IO) {
             getUserID()?.let { uid ->
 
@@ -77,7 +64,6 @@ class VocabViewModel @Inject constructor(
                             viewModelScope.launch(Dispatchers.IO) {
 
                                 val baseVocabList = dataList as List<BaseVocab>
-                                val vocabList = resultList.value
 
                                 val differenceVocabList = getDifferenceElement(vocabList, baseVocabList)
 
