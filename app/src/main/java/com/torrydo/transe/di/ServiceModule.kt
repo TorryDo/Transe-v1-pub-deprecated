@@ -7,6 +7,7 @@ import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
+import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,24 +18,24 @@ import javax.inject.Named
 
 @Module
 @InstallIn(ServiceComponent::class)
-@Named("launcherService")
+@Named(CONSTANT.serviceModule)
 object ServiceModule {
 
     @ServiceScoped
     @Provides
-    @Named("wm1")
+    @Named(CONSTANT.serviceWindowManager)
     fun provideWindowService(
         @ApplicationContext context: Context
     ) = context.getSystemService(Service.WINDOW_SERVICE) as WindowManager
 
     @ServiceScoped
     @Provides
-    @Named("searchRepo")
+    @Named(CONSTANT.serviceSearchRepo)
     fun provideSearchRepository() = SearchRepositoryImpl(EngSearchImpl())
 
     @ServiceScoped
     @Provides
-    @Named("dbRepo")
+    @Named(CONSTANT.serviceLocalDB)
     fun provideDatabaseRepository(
         @ApplicationContext context: Context
     ) = LocalDatabaseRepositoryImpl(

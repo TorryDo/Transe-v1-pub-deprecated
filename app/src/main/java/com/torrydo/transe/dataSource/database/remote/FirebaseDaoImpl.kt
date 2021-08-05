@@ -85,14 +85,18 @@ class FirebaseDaoImpl : RemoteDao {
     }
 
     override fun insertAll(listBaseVocab: List<BaseVocab>, resultListener: ResultListener?) {
+        // ------------------------ Not implemented yet ----------------------------
+        resultListener?.onError(Exception("Not implemented yet"))
     }
 
     override fun update(baseVocab: BaseVocab, resultListener: ResultListener?) {
+        // in Firebase, inserting the same childBranch will automatically update it
         insert(baseVocab, resultListener)
     }
 
 
     override fun delete(baseVocab: BaseVocab, resultListener: ResultListener?) {
+        // -------------------------- not tested yet ---------------------
         if (firebaseRef != null) {
             firebaseRef!!.child(baseVocab.keyWord)
                 .removeValue()

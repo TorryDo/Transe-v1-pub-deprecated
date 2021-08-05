@@ -36,11 +36,7 @@ class FirebaseAuthenticationMethod(
             val name = auth?.currentUser?.displayName ?: "null"
             val email = auth?.currentUser?.email ?: "null"
 
-            return UserAccountInfo(
-                uid,
-                name,
-                email
-            )
+            return UserAccountInfo(uid, name, email)
         }
 
         return null

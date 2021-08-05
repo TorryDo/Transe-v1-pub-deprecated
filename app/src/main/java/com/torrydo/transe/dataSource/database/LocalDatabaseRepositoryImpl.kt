@@ -55,7 +55,7 @@ class LocalDatabaseRepositoryImpl(
     override suspend fun get(keyWord: String, isReady: (vocab: Vocab?) -> Unit) {
         GlobalScope.launch {
             val myJob = async { vocabDao.loadVocabByKeyword(keyWord) }
-            myJob.join()         // depressing :<, check this later
+            myJob.join()         // blah blah blah, khi nào rảnh check lại sau
             isReady(myJob.await())
         }
     }

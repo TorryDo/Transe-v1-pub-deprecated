@@ -12,6 +12,23 @@ object CONSTANT {
         .build()
 
 
+    const val DEVICE_WIDTH = "dwidth"
+    const val DEVICE_HEIGHT = "dheight"
+
+    const val NOUN = "noun"
+    const val ADJ = "adjective"
+    const val VERB = "verb"
+
+
+    // --------------------- App ------------------------
+    const val appModule = "appModule"
+    const val appSearchRepo = "appSearchRepo"
+    const val appLocalDB = "appLocalDbRepo"
+    // ------------------- Service ----------------------
+    const val serviceModule = "serviceModule"
+    const val serviceWindowManager = "serviceWindowManager"
+    const val serviceSearchRepo = "serviceSearchRepo"
+    const val serviceLocalDB = "serviceLocalDB"
     // ------------------- activity ---------------------
     const val activityModule = "activityModule"
     const val activityPopupMenuHelper = "activityPopMenuHelper"
@@ -26,13 +43,5 @@ object CONSTANT {
     const val viewModelLocalDB = "viewModelLocalDbRepo"
     const val viewModelAuth = "viewModelAuth"
     const val viewModelRemoteDB = "viewModelRemoteDB"
-
-
-    const val DEVICE_WIDTH = "dwidth"
-    const val DEVICE_HEIGHT = "dheight"
-
-    const val NOUN = "noun"
-    const val ADJ = "adjective"
-    const val VERB = "verb"
 
 }

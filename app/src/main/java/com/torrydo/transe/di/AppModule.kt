@@ -7,6 +7,7 @@ import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
+import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,17 +18,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-@Named("appModule")
+@Named(CONSTANT.appModule)
 object AppModule {
 
     @Singleton
     @Provides
-    @Named("appSearchRepo")
+    @Named(CONSTANT.appSearchRepo)
     fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl())
 
     @Singleton
     @Provides
-    @Named("appDbRepo")
+    @Named(CONSTANT.appLocalDB)
     fun provideDatabaseRepository(
         @ApplicationContext context: Context
     ) : LocalDatabaseRepository = LocalDatabaseRepositoryImpl(

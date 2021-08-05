@@ -16,21 +16,21 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-@Named("launcherService")
+@Named(CONSTANT.serviceModule)
 class LauncherSearchService : Service() {
 
     private val TAG = "_TAG_LauncherSearchService"
 
     @Inject
-    @Named("wm1")
+    @Named(CONSTANT.serviceWindowManager)
     lateinit var windowManager: WindowManager
 
     @Inject
-    @Named("searchRepo")
+    @Named(CONSTANT.serviceSearchRepo)
     lateinit var searchRepoImpl: SearchRepositoryImpl
 
     @Inject
-    @Named("dbRepo")
+    @Named(CONSTANT.serviceLocalDB)
     lateinit var localDatabaseRepositoryImpl: LocalDatabaseRepositoryImpl
 
     private var transView: TransView? = null
