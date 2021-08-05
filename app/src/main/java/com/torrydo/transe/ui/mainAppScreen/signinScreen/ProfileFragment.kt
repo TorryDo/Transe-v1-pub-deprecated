@@ -19,12 +19,13 @@ import com.torrydo.transe.R
 import com.torrydo.transe.databinding.FragmentSignInBinding
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.ui.mainAppScreen.MainActivity
+import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Named
 
 @AndroidEntryPoint
-@Named("fragmentModule")
+@Named(CONSTANT.fragmentModule)
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentSignInBinding>() {
 
     private val TAG = "_TAG_SignInFragment"

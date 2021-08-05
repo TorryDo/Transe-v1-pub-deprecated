@@ -4,6 +4,7 @@ import android.content.Context
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
+import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyPopupMenuHelper
 import dagger.Module
 import dagger.Provides
@@ -15,19 +16,19 @@ import javax.inject.Named
 
 @Module
 @InstallIn(ActivityComponent::class)
-@Named("activityModule")
+@Named(CONSTANT.activityModule)
 object ActivityModule {
 
     @ActivityScoped
     @Provides
-    @Named("activityPopupMenuHelper")
+    @Named(CONSTANT.activityPopupMenuHelper)
     fun providePopupMenuHelper(
         @ApplicationContext context: Context
     ) = MyPopupMenuHelper(context)
 
     @ActivityScoped
     @Provides
-    @Named("activityDbRepo")
+    @Named(CONSTANT.activityLocalDB)
     fun provideDatabaseRepository(
         @ApplicationContext context: Context
     ) = LocalDatabaseRepositoryImpl(
@@ -35,7 +36,7 @@ object ActivityModule {
     )
     @ActivityScoped
     @Provides
-    @Named("activityPronunciationHelper")
+    @Named(CONSTANT.activityPronunciation)
     fun providePronunciationHelper(
         @ApplicationContext context: Context
     ) =  PronunciationHelper(context)

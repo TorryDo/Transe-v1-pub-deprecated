@@ -15,12 +15,12 @@ import com.airbnb.lottie.LottieAnimationView
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.adapter.holderClass.ResultHolder
+import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
+import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
-import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
-import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.databinding.ViewTransBinding
 import com.torrydo.transe.interfaces.ListResultListener
@@ -29,7 +29,10 @@ import com.torrydo.transe.interfaces.VocabListenter
 import com.torrydo.transe.utils.MyThreadHelper
 import com.torrydo.transe.utils.Utils
 import com.torrydo.transe.views.base.HomeLauncherBaseView
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.sql.Date
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -113,6 +116,7 @@ class TransView(
                                     uid = 0,
                                     time = Date(System.currentTimeMillis()),
                                     vocab = KEY_WORD,
+                                    finished = false,
                                     contentEng = engResultList,
                                     contentVi = emptyList()
                                 )

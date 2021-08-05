@@ -1,5 +1,6 @@
 package com.torrydo.transe.dataSource.database.remote
 
+import android.util.Log
 import com.google.firebase.database.*
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
@@ -9,10 +10,10 @@ class FirebaseDaoImpl : RemoteDao {
     private val TAG = "_TAG_FirebaseDaoImpl"
 
     companion object {
-        const val BRANCH_User = "User"
+        const val BRANCH_USER = "User"
         const val VOCAB = "Vocab"
         const val TIME = "time"
-        const val IS_FINISHED = "isFinished"
+        const val FINISHED = "finished"
     }
 
     private val firebaseDatabse: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -20,36 +21,37 @@ class FirebaseDaoImpl : RemoteDao {
 
     override fun setUserID(uid: String) {
         firebaseRef = firebaseDatabse.reference
-            .child(BRANCH_User)
+            .child(BRANCH_USER)
             .child(uid)
     }
 
     override fun getAllVocab(listResultListener: ListResultListener) {
-
+        // ---------------------- when user logged in -------------------
         if (firebaseRef != null) {
             firebaseRef!!.child(VOCAB).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(temp: DataSnapshot) {
+                override fun onDataChange(baseVocabJson: DataSnapshot) {
 
-                    val remoteVocabArray = ArrayList<RemoteVocab>()
+                    val remoteVocabArray = ArrayList<BaseVocab>()
 
-                    temp.children.forEach { snapshot ->
+                    baseVocabJson.children.forEach { singleVocab ->
 
-                        val keyWord = snapshot.key
-                        var time: Long = 0
-                        var isFinished = false
+                        val keyWord = singleVocab.key
+
                         keyWord?.let { nonNullKey ->
-                            snapshot.child(nonNullKey).also {
-                                time = it.child(TIME).value as Long
-                                isFinished = it.child(IS_FINISHED).value as Boolean
-                            }
-                        }
-                        remoteVocabArray.add(
-                            RemoteVocab(keyWord ?: "", RemoteVocabProperties(time, isFinished))
-                        )
+                            try {
+                                val time = singleVocab.child(TIME).value.toString().toLong()
+                                val finished = singleVocab.child(FINISHED).value.toString().toBoolean()
 
+                                Log.e(TAG, "time = $time & finished = $finished")
+
+                                remoteVocabArray.add(BaseVocab(nonNullKey, time, finished))
+                            } catch (e: Exception) {
+                                Log.e(TAG, "unable to add remotevocab")
+                            }
+
+                        }
                     }
                     listResultListener.onSuccess(remoteVocabArray)
-
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -57,36 +59,47 @@ class FirebaseDaoImpl : RemoteDao {
                 }
             })
         } else {
+            // ---------------------- when user didn't logged in -------------------
             listResultListener.onError(Exception("Please Sign In First !"))
         }
 
     }
 
-    override fun insert(remoteVocab: RemoteVocab, resultListener: ResultListener?) {
+    override fun insert(baseVocab: BaseVocab, resultListener: ResultListener?) {
         if (firebaseRef != null) {
+
+            val tempHashmap =  HashMap<String, String>()
+            tempHashmap.put(TIME, baseVocab.time.toString())
+            tempHashmap.put(FINISHED, baseVocab.finished.toString())
+
             firebaseRef!!
                 .child(VOCAB)
-                .child(remoteVocab.keyWord)
-                .setValue(remoteVocab.remoteVocabProperties)
-                .addOnSuccessListener {
-                    resultListener?.onSuccess(null)
-                }
-                .addOnFailureListener {
-                    resultListener?.onError(it)
-                }
+                .child(baseVocab.keyWord)
+                .setValue(tempHashmap)
+                .addOnSuccessListener { resultListener?.onSuccess(null) }
+                .addOnFailureListener { resultListener?.onError(it) }
         } else {
             resultListener?.onError(Exception("Please Sign In First"))
         }
 
     }
 
-    override fun insertAll(listRemoteVocab: List<RemoteVocab>, resultListener: ResultListener?) {
+    override fun insertAll(listBaseVocab: List<BaseVocab>, resultListener: ResultListener?) {
     }
 
-    override fun update(remoteVocab: RemoteVocab, resultListener: ResultListener?) {
-        insert(remoteVocab, resultListener)
+    override fun update(baseVocab: BaseVocab, resultListener: ResultListener?) {
+        insert(baseVocab, resultListener)
     }
 
-    override fun delete(remoteVocab: RemoteVocab, resultListener: ResultListener?) {
+
+    override fun delete(baseVocab: BaseVocab, resultListener: ResultListener?) {
+        if (firebaseRef != null) {
+            firebaseRef!!.child(baseVocab.keyWord)
+                .removeValue()
+                .addOnSuccessListener { resultListener?.onSuccess(null) }
+                .addOnFailureListener { resultListener?.onError(it) }
+        } else {
+            resultListener?.onError(Exception("Please Sign In First"))
+        }
     }
 }

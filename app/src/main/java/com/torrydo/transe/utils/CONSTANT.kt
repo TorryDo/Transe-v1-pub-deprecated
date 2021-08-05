@@ -10,16 +10,28 @@ object CONSTANT {
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
+
+    // ------------------- activity ---------------------
+    const val activityModule = "activityModule"
+    const val activityPopupMenuHelper = "activityPopMenuHelper"
+    const val activityLocalDB = "activityLocalDbRepo"
+    const val activityPronunciation = "activityPronunciation"
+    // ------------------- fragment ---------------------
+    const val fragmentModule = "fragmentModule"
+    const val fragmentAuth = "fragmentAuth"
+    // ------------------- viewModel --------------------
     const val viewModelModule = "viewModelModule"
+    const val viewModelSearchRepo = "viewModelSearchRepo"
     const val viewModelLocalDB = "viewModelLocalDbRepo"
     const val viewModelAuth = "viewModelAuth"
     const val viewModelRemoteDB = "viewModelRemoteDB"
 
-    val DEVICE_WIDTH = "dwidth"
-    val DEVICE_HEIGHT = "dheight"
 
-    val NOUN = "noun"
-    val ADJ = "adjective"
-    val VERB = "verb"
+    const val DEVICE_WIDTH = "dwidth"
+    const val DEVICE_HEIGHT = "dheight"
+
+    const val NOUN = "noun"
+    const val ADJ = "adjective"
+    const val VERB = "verb"
 
 }

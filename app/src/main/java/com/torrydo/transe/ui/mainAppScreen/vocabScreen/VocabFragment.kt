@@ -26,15 +26,15 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-@Named("activityModule")
+@Named(CONSTANT.activityModule)
 class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
 
     @Inject
-    @Named("activityPronunciationHelper")
+    @Named(CONSTANT.activityPronunciation)
     lateinit var pronunciationHelper: PronunciationHelper
 
     @Inject
-    @Named("activityPopupMenuHelper")
+    @Named(CONSTANT.activityPopupMenuHelper)
     lateinit var popupMenuHelper: MyPopupMenuHelper
 
     private val mViewModel: VocabViewModel by viewModels()
@@ -94,18 +94,20 @@ class VocabFragment : BaseFragment<VocabViewModel, FragmentVocabBinding>() {
             popupMenuHelper.show(
                 v,
                 listOf(
-                    "Sync"  // 0
+                    "Upload",  // 0
+                    "Sync",    // 1
                 )
             ) { position ->
                 when (position) {
                     0 -> {
-                        viewModel.getUserID()?.let { uid ->
-                            Utils.showLongToast(requireContext(), uid)
-                            viewModel.resultList.value?.let { vocabList ->
-                                viewModel.insertAllToRemoteDatabase(vocabList)
-                            }
+                        Utils.showLongToast(requireContext(), "updating to remoteDatabase")
+                        viewModel.resultList.value?.let { vocabList ->
+                            viewModel.insertAllToRemoteDatabase(vocabList)
 
                         }
+                    }
+                    1 -> {
+                        viewModel.syncAllVocabFromRemoteDatabase()
                     }
                 }
             }

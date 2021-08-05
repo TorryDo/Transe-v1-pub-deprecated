@@ -23,6 +23,10 @@ class LocalDatabaseRepositoryImpl(
         }
     }
 
+    override suspend fun insertAllVocab(vocabList: Array<Vocab>) {
+        Log.e(TAG, "Not yet implement 'insertAllVocab'")
+    }
+
     override suspend fun update(vocab: Vocab) {
         try {
             vocabDao.updateVocab(vocab)
@@ -35,6 +39,13 @@ class LocalDatabaseRepositoryImpl(
         try {
             vocabDao.delete(vocab)
         } catch (e: Exception) {
+            Log.e(TAG, "message: \n ${e.message}")
+        }
+    }
+    override suspend fun deleteAll() {
+        try {
+            vocabDao.deleteAll()
+        }catch (e: Exception){
             Log.e(TAG, "message: \n ${e.message}")
         }
     }

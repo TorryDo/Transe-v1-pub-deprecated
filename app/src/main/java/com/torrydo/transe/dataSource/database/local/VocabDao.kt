@@ -21,12 +21,16 @@ interface VocabDao {
     fun insertVocab(vocab: Vocab)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg vocab: Vocab)
+    fun insertAllVocab(vararg vocab: Vocab)
 
     @Update
     fun updateVocab(vocab: Vocab)
 
     @Delete
     fun delete(vocab: Vocab)
+
+    @Query("DELETE FROM $VOCAB_TABLE_NAME")
+    fun deleteAll()
+
 
 }

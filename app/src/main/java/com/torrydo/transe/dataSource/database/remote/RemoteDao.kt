@@ -9,12 +9,12 @@ interface RemoteDao {
 
     fun getAllVocab(listResultListener: ListResultListener)
 
-    fun insert(remoteVocab: RemoteVocab, resultListener: ResultListener?)
+    fun insert(baseVocab: BaseVocab, resultListener: ResultListener?)
 
-    fun insertAll(listRemoteVocab: List<RemoteVocab>, resultListener: ResultListener?)
+    fun insertAll(listBaseVocab: List<BaseVocab>, resultListener: ResultListener?)
 
-    fun update(remoteVocab: RemoteVocab, resultListener: ResultListener?)
+    fun update(baseVocab: BaseVocab, resultListener: ResultListener?)
 
-    fun delete(remoteVocab: RemoteVocab, resultListener: ResultListener?)
+    fun delete(baseVocab: BaseVocab, resultListener: ResultListener?)
 
 }
