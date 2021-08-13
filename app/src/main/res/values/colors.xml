@@ -21,7 +21,7 @@
     <color name="background">#ffffff</color>
 
     <color name="main_color_lightest">#F3F7FF</color>
-    <color name="main_color_lighter">#C3D9FF</color>
+    <color name="main_color_lighter">#B6D1FF</color>
     <color name="main_color">#5E96F6</color>
     <color name="main_color_darker">#2676FF</color>
     <color name="main_color_darkest">#0252DC</color>

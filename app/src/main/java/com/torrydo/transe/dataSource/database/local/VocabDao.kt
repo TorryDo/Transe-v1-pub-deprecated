@@ -8,9 +8,11 @@ import com.torrydo.transe.dataSource.database.local.models.Vocab
 @Dao
 interface VocabDao {
 
-//    @Query("SELECT * FROM $VOCAB_TABLE_NAME")
-    @Query("SELECT * FROM $VOCAB_TABLE_NAME ORDER BY RANDOM()")
-    fun getAll(): LiveData<List<Vocab>>
+    @Query("SELECT * FROM $VOCAB_TABLE_NAME")
+    fun getAll(): List<Vocab>
+
+    @Query("SELECT * FROM $VOCAB_TABLE_NAME")
+    fun getAllLiveData(): LiveData<List<Vocab>>
 
 //    @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE uid IN (:userIds)")
 //    fun loadAllByIds(userIds: IntArray): LiveData<List<Vocab>>

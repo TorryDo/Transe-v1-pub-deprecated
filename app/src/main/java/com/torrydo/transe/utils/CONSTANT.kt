@@ -37,6 +37,10 @@ object CONSTANT {
     // ------------------- fragment ---------------------
     const val fragmentModule = "fragmentModule"
     const val fragmentAuth = "fragmentAuth"
+    const val fragmentSearchRepo = "fragmentSearchRepo"
+    const val fragmentLocalDB = "fragmentLocalDbRepo"
+    const val fragmentPopupMenuHelper = "fragmentPopMenuHelper"
+    const val fragmentPronunciation = "fragmentPronunciation"
     // ------------------- viewModel --------------------
     const val viewModelModule = "viewModelModule"
     const val viewModelSearchRepo = "viewModelSearchRepo"

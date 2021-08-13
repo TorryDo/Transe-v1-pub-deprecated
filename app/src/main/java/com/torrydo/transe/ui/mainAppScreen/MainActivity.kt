@@ -2,6 +2,7 @@ package com.torrydo.transe.ui.mainAppScreen
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.torrydo.transe.R
@@ -22,6 +23,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         (supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment).also {
             binding.mainBottomNavView.setupWithNavController(it.navController)
+
+
         }
 
     }

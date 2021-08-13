@@ -1,15 +1,13 @@
-package com.torrydo.transe.ui.mainAppScreen.vocabScreen
+package com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.database.remote.BaseVocab
-import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.interfaces.ListResultListener
@@ -24,24 +22,26 @@ import javax.inject.Named
 
 @HiltViewModel
 @Named(CONSTANT.viewModelModule)
-class VocabViewModel @Inject constructor(
+class VocabCollectionViewModel @Inject constructor(
     @Named(CONSTANT.viewModelSearchRepo) val searchRepository: SearchRepository,
     @Named(CONSTANT.viewModelLocalDB) val localDatabaseRepository: LocalDatabaseRepository,
     @Named(CONSTANT.viewModelRemoteDB) val remoteDatabaseRepository: RemoteDatabaseRepository,
     @Named(CONSTANT.viewModelAuth) val authentionMethod: AuthenticationMethod
 ) : ViewModel() {
 
-    private val TAG = "_TAG_FirebaseDaoImpl"
+    private val TAG = "_TAG_VocabVM"
 
 
-    fun insertAllToRemoteDatabase(vocabList: List<Vocab>) {
+    fun insertAllToRemoteDatabase(
+        vocabList: List<Vocab>
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             getUserID()?.let { uid ->
                 vocabList.forEach { vocab ->
 
                     remoteDatabaseRepository.setUserID(uid)
                     remoteDatabaseRepository.insert(
-                        convertToRemoteVocab(vocab),
+                        convertToBaseVocab(vocab),
                         object : ResultListener {
                             override fun <T> onSuccess(data: T?) {
                                 Log.i(TAG, "insertion succeed")
@@ -49,11 +49,15 @@ class VocabViewModel @Inject constructor(
                         })
 
                 }
+
             }
         }
     }
 
-    fun syncAllVocabFromRemoteDatabase(vocabList: List<Vocab>?) {
+    fun syncAllVocabFromRemoteDatabase(
+        vocabList: List<Vocab>?,
+        isFinished: () -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             getUserID()?.let { uid ->
 
@@ -61,21 +65,27 @@ class VocabViewModel @Inject constructor(
                 remoteDatabaseRepository.getAll(object : ListResultListener {
                     override fun <T> onSuccess(dataList: List<T>) {
                         if (dataList.isNotEmpty() && dataList[0] is BaseVocab) {
-                            viewModelScope.launch(Dispatchers.IO) {
 
-                                val baseVocabList = dataList as List<BaseVocab>
+                            val baseVocabList = dataList as List<BaseVocab>
 
-                                val differenceVocabList = getDifferenceElement(vocabList, baseVocabList)
+                            val differenceVocabList = getDifferentElements(vocabList, baseVocabList)
 
-                                differenceVocabList.forEach { baseVocab ->
-                                    convertToVocab(baseVocab) { vocab ->
-                                        viewModelScope.launch(Dispatchers.IO) {
-                                            localDatabaseRepository.insert(vocab)
-                                        }
+                            var count = 0
+
+                            differenceVocabList.forEach { baseVocab ->
+                                convertToVocab(baseVocab) { vocab ->
+                                    viewModelScope.launch(Dispatchers.IO) {
+                                        localDatabaseRepository.insert(vocab)
+                                        count++
                                     }
                                 }
-
                             }
+
+                            if (count >= baseVocabList.size - 1) {
+                                isFinished()
+                            }
+
+
                         }
                     }
 
@@ -88,9 +98,65 @@ class VocabViewModel @Inject constructor(
         }
     }
 
-    // --------------------------- private func --------------------------
+    fun deleteVocabFromRemoteDB(
+        vocab: Vocab
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
 
-    private fun convertToRemoteVocab(vocab: Vocab): BaseVocab {
+            getUserID()?.let { uid ->
+                remoteDatabaseRepository.setUserID(uid)
+                remoteDatabaseRepository.delete(
+                    convertToBaseVocab(vocab),
+                    object : ResultListener {
+                        override fun <T> onSuccess(data: T?) {
+                            Log.i(TAG, "vocab deleted away from remoteDB")
+                        }
+
+                        override fun onError(e: Exception) {
+                            Log.e(TAG, e.message.toString())
+                        }
+                    }
+                )
+
+                return@launch
+            }
+
+            Log.e(TAG, "pls signIn first")
+
+        }
+    }
+
+    fun updateVocabFromRemoteDB(
+        vocab: Vocab
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserID()?.let { uid ->
+                remoteDatabaseRepository.setUserID(uid)
+                remoteDatabaseRepository.update(
+                    convertToBaseVocab(vocab),
+                    object : ResultListener {
+
+                        override fun <T> onSuccess(data: T?) {
+                            Log.i(TAG, "updated")
+                        }
+
+                        override fun onError(e: Exception) {
+                            Log.e(TAG, e.message.toString())
+                        }
+
+                    }
+                )
+                return@launch
+            }
+            Log.e(TAG, "pls signIn first")
+        }
+    }
+
+
+
+    // --------------------------- private func ---------------------------
+
+    private fun convertToBaseVocab(vocab: Vocab): BaseVocab {
         val keyWord = vocab.vocab
         val time = vocab.time.time.toString()
         val isFinished = false.toString()
@@ -124,7 +190,7 @@ class VocabViewModel @Inject constructor(
 
 
     private fun getUserID() = authentionMethod.getUserAccountInfo()?.uid
-    private fun getDifferenceElement(
+    private fun getDifferentElements(
         vocabList: List<Vocab>?,
         baseVocabList: List<BaseVocab>
     ): List<BaseVocab> {
@@ -143,7 +209,6 @@ class VocabViewModel @Inject constructor(
 
             val b = strVocab.contains(keyWord)
             if (!b) {
-                Log.i(TAG, "difference is : $keyWord")
                 differenceRemoteVocab.add(baseVocab)
             }
         }

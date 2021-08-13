@@ -13,8 +13,8 @@ data class Vocab(
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @ColumnInfo(name = "vocab") val vocab: String,
     @ColumnInfo(name = "date") val time: Date,
-    @ColumnInfo(name = "finished") val finished: Boolean,
-    @ColumnInfo(name = "contentEng") val contentEng: List<EngResult>,
-    @ColumnInfo(name = "contentVi") val contentVi: List<ViResult>?
+    @ColumnInfo(name = "finished") var finished: Boolean,
+    @ColumnInfo(name = "contentEng") var contentEng: List<EngResult>,
+    @ColumnInfo(name = "contentVi") var contentVi: List<ViResult>?
 
 )

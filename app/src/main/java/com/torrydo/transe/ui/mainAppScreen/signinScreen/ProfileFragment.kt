@@ -16,7 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.torrydo.transe.R
-import com.torrydo.transe.databinding.FragmentSignInBinding
+import com.torrydo.transe.databinding.FragmentProfileBinding
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.ui.mainAppScreen.MainActivity
 import com.torrydo.transe.utils.CONSTANT
@@ -26,13 +26,13 @@ import javax.inject.Named
 
 @AndroidEntryPoint
 @Named(CONSTANT.fragmentModule)
-class ProfileFragment : BaseFragment<ProfileViewModel, FragmentSignInBinding>() {
+class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
 
     private val TAG = "_TAG_SignInFragment"
 
     private val mProfileVM: ProfileViewModel by viewModels()
     override fun getViewModelClass() = mProfileVM
-    override fun getViewBinding() = FragmentSignInBinding.inflate(layoutInflater)
+    override fun getViewBinding() = FragmentProfileBinding.inflate(layoutInflater)
 
     override fun configOnCreateView(
         inflater: LayoutInflater,

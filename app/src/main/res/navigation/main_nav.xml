@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/vocabFragment">
+    app:startDestination="@id/vocabCollectionFragment">
 
     <fragment
-        android:id="@+id/vocabFragment"
-        android:name="com.torrydo.transe.ui.mainAppScreen.vocabScreen.VocabFragment"
-        android:label="fragment_vocab"
-        tools:layout="@layout/fragment_vocab">
+        android:id="@+id/vocabCollectionFragment"
+        android:name="com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen.VocabCollectionFragment"
+        android:label="fragment_vocab_collection"
+        tools:layout="@layout/fragment_vocab_collection">
         <action
             android:id="@+id/action_vocabFragment_to_mainFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_vocabCollectionFragment_to_vocabFragment"
+            app:destination="@id/vocabFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -27,5 +30,11 @@
         android:id="@+id/signInFragment"
         android:name="com.torrydo.transe.ui.mainAppScreen.signinScreen.ProfileFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/vocabFragment"
+        android:name="com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen.vocabFragment.VocabFragment"
+        android:label="fragment_vocab"
+        android:layout="@layout/fragment_vocab"/>
 </navigation>
