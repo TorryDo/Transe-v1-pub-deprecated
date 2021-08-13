@@ -40,9 +40,8 @@ class FirebaseDaoImpl : RemoteDao {
                         keyWord?.let { nonNullKey ->
                             try {
                                 val time = singleVocab.child(TIME).value.toString().toLong()
-                                val finished = singleVocab.child(FINISHED).value.toString().toBoolean()
-
-                                Log.e(TAG, "time = $time & finished = $finished")
+                                val finished =
+                                    singleVocab.child(FINISHED).value.toString().toBoolean()
 
                                 remoteVocabArray.add(BaseVocab(nonNullKey, time, finished))
                             } catch (e: Exception) {
@@ -68,7 +67,7 @@ class FirebaseDaoImpl : RemoteDao {
     override fun insert(baseVocab: BaseVocab, resultListener: ResultListener?) {
         if (firebaseRef != null) {
 
-            val tempHashmap =  HashMap<String, String>()
+            val tempHashmap = HashMap<String, String>()
             tempHashmap.put(TIME, baseVocab.time.toString())
             tempHashmap.put(FINISHED, baseVocab.finished.toString())
 
@@ -96,14 +95,21 @@ class FirebaseDaoImpl : RemoteDao {
 
 
     override fun delete(baseVocab: BaseVocab, resultListener: ResultListener?) {
-        // -------------------------- not tested yet ---------------------
+
         if (firebaseRef != null) {
-            firebaseRef!!.child(baseVocab.keyWord)
+            firebaseRef!!
+                .child(VOCAB)
+                .child(baseVocab.keyWord)
                 .removeValue()
-                .addOnSuccessListener { resultListener?.onSuccess(null) }
-                .addOnFailureListener { resultListener?.onError(it) }
+                { error, ref ->
+
+                    if (error == null) resultListener?.onSuccess(null)
+                    else resultListener?.onError(error.toException())
+
+                }
         } else {
             resultListener?.onError(Exception("Please Sign In First"))
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.torrydo.transe.dataSource.translation.eng
 
+import android.util.Log
 import com.torrydo.transe.dataSource.translation.MyJsoupHelper
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
@@ -19,11 +20,12 @@ class EngSearchImpl : EngSearch {
     private val baseUrlPreparedForAudioDownloader = "https://dictionary.cambridge.org"
     private val mainUrl = "https://dictionary.cambridge.org/dictionary/english/"
 
-    private var doc: Document? = null
     private var myJsoupHelper: MyJsoupHelper? = null
 
     init {
-        myJsoupHelper = MyJsoupHelper()
+        if(myJsoupHelper == null){
+            myJsoupHelper = MyJsoupHelper()
+        }
 
     }
 
@@ -33,10 +35,10 @@ class EngSearchImpl : EngSearch {
     ) {
         Thread {
             try {
-                doc = MyJsoupHelper().connect(mainUrl + keyWord)
+                val doc = MyJsoupHelper().connect(mainUrl + keyWord)
 
                 val elements: Elements =
-                    doc!!.select("div.pr.dictionary")
+                    doc.select("div.pr.dictionary")
                         .first()
                         .select("div.pr.entry-body__el")
 
@@ -69,14 +71,18 @@ class EngSearchImpl : EngSearch {
         ) ?: "null"
     }
 
-    private fun getPronunciationAudioUrl(): String {
+    // error ------------------------
+
+    private fun getPronunciationAudioUrl(element: Element): String {
         return try {
             baseUrlPreparedForAudioDownloader +
-                    doc!!.getElementById("ampaudio2")
+                    element.select("span.daud")
+                        .last()
                         .select("source")
                         .first()
                         .attr("src")
         } catch (e: Exception) {
+            Log.e(TAG, "message = ${e.message}")
             "null"
         }
     }
@@ -92,7 +98,7 @@ class EngSearchImpl : EngSearch {
             val type = getType(elementOuter)
 
             val pronunciationText = getPronunciationText(elementOuter)
-            val pronunciationUrl = getPronunciationAudioUrl()
+            val pronunciationUrl = getPronunciationAudioUrl(elementOuter)
             val pronunciation = Pronunciation(pronunciationText, pronunciationUrl)
 
             val elementsContent: Elements = elementOuter.select("div.def-block.ddef_block ")

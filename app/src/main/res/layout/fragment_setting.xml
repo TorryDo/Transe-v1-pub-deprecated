@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.torrydo.transe.ui.mainAppScreen.settingScreen.SettingViewModel" />
@@ -44,19 +43,22 @@
                     android:text="@{viewModel.userAccount.name}"
                     android:textSize="@dimen/text_big"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/settingEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@{viewModel.userAccount.email}"
                     android:textSize="@dimen/text_big"
-                    app:layout_constraintBottom_toBottomOf="@id/settingName"
+                    android:layout_marginTop="@dimen/margin_medium"
+
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/settingName"
-                    app:layout_constraintTop_toTopOf="@id/settingName"
-                    tools:layout_editor_absoluteY="20dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/settingName"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

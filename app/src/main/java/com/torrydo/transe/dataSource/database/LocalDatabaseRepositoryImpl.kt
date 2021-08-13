@@ -60,8 +60,12 @@ class LocalDatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun getAll(): LiveData<List<Vocab>> {
+    override suspend fun getAll(): List<Vocab> {
         return vocabDao.getAll()
+    }
+
+    override suspend fun getAllLiveData(): LiveData<List<Vocab>> {
+        return vocabDao.getAllLiveData()
     }
 
 }

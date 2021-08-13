@@ -14,12 +14,12 @@ class PronunciationHelper(
         keyWord: String,
         pronunciation: Pronunciation
     ) {
-        GlobalScope.launch(Dispatchers.IO) {
+        Thread {
             PronunciationAudioImpl(
                 context,
                 pronunciation.url
             ).play(keyWord)
-        }
+        }.start()
     }
 
 }

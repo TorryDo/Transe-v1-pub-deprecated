@@ -1,5 +1,6 @@
 package com.torrydo.transe.ui.mainAppScreen
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,7 @@ import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.utils.CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,15 +21,64 @@ class MainViewModel @Inject constructor(
 
     private val TAG = "_TAG_MainViewModel"
 
-    var vocabList: LiveData<List<Vocab>> = MutableLiveData<List<Vocab>>()
+    var vocabLiveData: LiveData<List<Vocab>> = MutableLiveData()
+
+    var vocabListNotFinished = MutableLiveData<List<Vocab>>()
+    var vocabListFinished = MutableLiveData<List<Vocab>>()
 
     init {
-        getAllLocalVocab()
+        getVocabLiveData()
     }
 
-    fun getAllLocalVocab(){
+    private fun getVocabLiveData() {
         viewModelScope.launch(Dispatchers.IO) {
-            vocabList = localDatabaseRepository.getAll()
+            vocabLiveData = localDatabaseRepository.getAllLiveData()
+        }
+    }
+
+    fun set2VocabList(
+        isReady: () -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            vocabLiveData.value?.let { vl ->
+
+                val newListNotFinished = vl.filterNot { it.finished }
+                val newListFinished = vl.filter { it.finished }
+
+                withContext(Dispatchers.Main){
+                    vocabListNotFinished.value = newListNotFinished
+                    vocabListFinished.value = newListFinished
+                    isReady()
+                }
+            }
+
+
+        }
+
+    }
+
+    fun shuffle2VocabList(
+        isReady: () -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            vocabLiveData.value?.let { vl ->
+                val mVocabListFinished = vl.filter { it.finished }.shuffled()
+                val mVocabListNotFinished = vl.filterNot { it.finished }.shuffled()
+
+                withContext(Dispatchers.Main) {
+                    vocabListNotFinished.value = mVocabListNotFinished
+                    vocabListFinished.value = mVocabListFinished
+                    isReady()
+                }
+            }
+        }
+    }
+
+
+    fun updateVocab(vocab: Vocab) {
+        viewModelScope.launch(Dispatchers.IO) {
+            localDatabaseRepository.update(vocab)
         }
     }
 
@@ -38,5 +87,6 @@ class MainViewModel @Inject constructor(
             localDatabaseRepository.delete(vocab)
         }
     }
+
 
 }

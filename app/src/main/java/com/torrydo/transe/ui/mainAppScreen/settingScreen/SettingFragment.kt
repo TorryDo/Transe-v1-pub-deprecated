@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.torrydo.transe.R
@@ -11,7 +12,6 @@ import com.torrydo.transe.databinding.FragmentSettingBinding
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.ui.mainAppScreen.MainActivity
 import com.torrydo.transe.utils.CONSTANT
-import com.torrydo.transe.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Named
 
@@ -24,6 +24,10 @@ class SettingFragment : BaseFragment<SettingViewModel, FragmentSettingBinding>()
     override fun getViewModelClass() = mViewModel
     override fun getViewBinding() = FragmentSettingBinding.inflate(layoutInflater)
 
+//    init {
+//        VocabFragment.TAB_FINISHED = true
+//    }
+
     @SuppressLint("ResourceType")
     override fun configOnCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,9 @@ class SettingFragment : BaseFragment<SettingViewModel, FragmentSettingBinding>()
     }
 
     private fun setup() {
+
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.theme_color)
 
         binding.settingCard.setOnClickListener {
             val mainActivity = (requireActivity() as MainActivity)
