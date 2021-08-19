@@ -1,6 +1,5 @@
 package com.torrydo.transe.ui.mainAppScreen
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,9 @@ import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.utils.CONSTANT
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -20,6 +21,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val TAG = "_TAG_MainViewModel"
+
+    var TAB_POSITION = 0
+
 
     var vocabLiveData: LiveData<List<Vocab>> = MutableLiveData()
 
@@ -45,13 +49,12 @@ class MainViewModel @Inject constructor(
                 val newListNotFinished = vl.filterNot { it.finished }
                 val newListFinished = vl.filter { it.finished }
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     vocabListNotFinished.value = newListNotFinished
                     vocabListFinished.value = newListFinished
                     isReady()
                 }
             }
-
 
         }
 

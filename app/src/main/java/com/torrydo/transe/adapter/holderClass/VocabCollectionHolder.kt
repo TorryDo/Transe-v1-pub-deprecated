@@ -22,9 +22,9 @@ class VocabCollectionHolder(
 
     val popUpHelper = MyPopupMenuHelper(viewBinding.root.context)
 
-    private fun requestOnClick(item: Vocab) {
+    private fun requestOnClick(item: Vocab, position: Int) {
         viewBinding.itemVocabColContent.setOnClickListener {
-            vocabListenter.onTouch()
+            vocabListenter.onTouch(position)
         }
         viewBinding.itemVocabColTitle.setOnClickListener { view ->
             vocabListenter.playPronunciation(item.vocab, item.contentEng[0].pronunciation)
@@ -51,7 +51,7 @@ class VocabCollectionHolder(
         }
     }
 
-    override fun bind(item: Vocab) {
+    override fun bind(item: Vocab, position: Int) {
 
         val contentBuilder = StringBuilder()
 
@@ -111,7 +111,7 @@ class VocabCollectionHolder(
             viewTypeList[i].setColorState(singleType, nounCount, verbCount, adjCount)
         }
 
-        requestOnClick(item)
+        requestOnClick(item, position)
 
     }
 

@@ -88,6 +88,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
+    // ----------------------------- Work Manager -------------------------------------
+    implementation "androidx.work:work-runtime-ktx:2.6.0-rc01"
 
     // ---------------------------- dagger hilt ---------------------------------------
     def hilt_version = '2.37'

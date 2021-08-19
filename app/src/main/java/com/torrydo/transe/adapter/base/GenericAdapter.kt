@@ -23,7 +23,7 @@ abstract class GenericAdapter<T>(listItems: List<T>?) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as Binder<T>).bind(listItems[position])
+        (holder as Binder<T>).bind(listItems[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +43,7 @@ abstract class GenericAdapter<T>(listItems: List<T>?) :
 //    }
 
     internal interface Binder<T> {
-        fun bind(item: T)
+        fun bind(item: T, position: Int)
     }
 
 }

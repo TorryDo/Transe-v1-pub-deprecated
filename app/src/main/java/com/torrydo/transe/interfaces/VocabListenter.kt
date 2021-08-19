@@ -5,7 +5,7 @@ import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronun
 
 interface VocabListenter {
 
-    fun onTouch(){}
+    fun onTouch(position: Int){}
 
     fun insert(vocab: Vocab){}
 

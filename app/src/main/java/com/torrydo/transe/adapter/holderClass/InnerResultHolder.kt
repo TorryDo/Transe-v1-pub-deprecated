@@ -28,7 +28,7 @@ class InnerResultHolder(
         }
     }
 
-    override fun bind(item: InnerEngResult) {
+    override fun bind(item: InnerEngResult, position: Int) {
         binding.itemInnerResultTxtTitle.text = item.title
         binding.itemInnerResultTxtContent.text = item.examples
 

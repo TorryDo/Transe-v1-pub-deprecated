@@ -5,12 +5,12 @@
 
         <item
             android:id="@+id/vocabCollectionFragment"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="vocab" />
+            android:icon="@drawable/ic_translate"
+            android:title="Collection" />
         <item
             android:id="@+id/settingFragment"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="main" />
+            android:icon="@drawable/ic_setting2"
+            android:title="setting" />
 
     </group>
 

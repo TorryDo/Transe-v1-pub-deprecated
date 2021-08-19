@@ -34,7 +34,7 @@ class ResultHolder(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun bind(item: EngResult) {
+    override fun bind(item: EngResult, position: Int) {
         binding.itemResultType.also { tv ->
             val tempType = item.type
             when (tempType) {

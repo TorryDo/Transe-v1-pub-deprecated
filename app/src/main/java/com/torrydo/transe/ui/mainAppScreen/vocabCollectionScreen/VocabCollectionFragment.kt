@@ -38,7 +38,6 @@ class VocabCollectionFragment :
 
     companion object {
         var TAB_FINISHED = false
-        var IS_SHUFFLED = false
     }
 
     @Inject
@@ -211,7 +210,9 @@ class VocabCollectionFragment :
     // define some events for recyclerItem
     private inner class MyVocabListener : VocabListenter {
 
-        override fun onTouch() {
+        override fun onTouch(position: Int) {
+            activityViewModel.TAB_POSITION = position
+
             requireActivity().findNavController(R.id.mainFragmentContainerView)
                 .navigate(R.id.action_vocabCollectionFragment_to_vocabFragment)
         }
