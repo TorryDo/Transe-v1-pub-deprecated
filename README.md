@@ -1,7 +1,7 @@
 # Transe
 
 ### Developer
-* Nguyễn Đỗ Trí  (me)
+* Nguyễn Đỗ Trí
 
 ### Content
 I. Requirement
