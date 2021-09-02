@@ -5,6 +5,8 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 object CONSTANT {
 
+    const val PIXABAY_KEY = "19486905-b9e17d4e6d0dd6b4a1e5a0c82"
+
     var KeyWord_Holder = ""
 
     val moshi = Moshi.Builder()
@@ -47,5 +49,6 @@ object CONSTANT {
     const val viewModelLocalDB = "viewModelLocalDbRepo"
     const val viewModelAuth = "viewModelAuth"
     const val viewModelRemoteDB = "viewModelRemoteDB"
+    const val viewModelNotificationWorker = "viewModelNotiWorker"
 
 }

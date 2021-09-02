@@ -10,7 +10,6 @@ class NotificationHelper(
     private val context: Context
 ) {
 
-
     fun showNotification(noti : Noti){
 
         val notiManager = NotificationManagerCompat.from(context)

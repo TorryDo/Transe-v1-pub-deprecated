@@ -37,10 +37,11 @@
 
                 <TextView
                     android:id="@+id/settingName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_medium"
                     android:text="@{viewModel.userAccount.name}"
+                    android:gravity="start"
                     android:textSize="@dimen/text_big"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +49,12 @@
 
                 <TextView
                     android:id="@+id/settingEmail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
                     android:text="@{viewModel.userAccount.email}"
                     android:textSize="@dimen/text_big"
-                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_margin="@dimen/margin_medium"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +65,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
+
+        <include
+            android:id="@+id/settingOption1"
+            layout="@layout/setting_option"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            android:layout_marginTop="@dimen/margin_medium"
+
+            app:layout_constraintTop_toBottomOf="@id/settingCard"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

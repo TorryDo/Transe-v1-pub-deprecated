@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.torrydo.transe.R
 import com.torrydo.transe.adapter.base.GenericAdapter
 import com.torrydo.transe.adapter.holderClass.VocabCollectionHolder
@@ -25,9 +27,9 @@ import com.torrydo.transe.ui.mainAppScreen.MainViewModel
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyPopupMenuHelper
 import com.torrydo.transe.utils.Utils
+import com.torrydo.transe.utils.worker.NotificationWorker
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -169,7 +171,7 @@ class VocabCollectionFragment :
             }
             vocabListOfficial.addAll(vl)
 
-            activityViewModel.set2VocabList(){  // when IO Thread finished it's work
+            activityViewModel.set2VocabList() {  // when IO Thread finished it's work
                 update2VocabListState()
             }
 

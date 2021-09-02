@@ -7,6 +7,7 @@ import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
+import com.torrydo.transe.dataSource.image.ImageApiImpl
 import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,7 @@ object AppModule {
     @Singleton
     @Provides
     @Named(CONSTANT.appSearchRepo)
-    fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl())
+    fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl(), ImageApiImpl())
 
     @Singleton
     @Provides

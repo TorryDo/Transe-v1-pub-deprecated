@@ -40,6 +40,15 @@ class SettingFragment : BaseFragment<SettingViewModel, FragmentSettingBinding>()
 
     private fun setup() {
 
+        // setup option notification
+        binding.settingOption1.let { option1 ->
+            option1.optionTitle.text = "Thông báo"
+            option1.optionSwitch.setOnCheckedChangeListener { compoundButton, b ->
+                if(b) viewModel.registerVocabNoti()
+                else viewModel.unregisterVocabNoti()
+            }
+        }
+
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.theme_color)
 

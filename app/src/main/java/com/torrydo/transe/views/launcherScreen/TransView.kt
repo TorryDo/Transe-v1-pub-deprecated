@@ -25,6 +25,7 @@ import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.databinding.ViewTransBinding
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.RequestListener
+import com.torrydo.transe.interfaces.ResultListener
 import com.torrydo.transe.interfaces.VocabListenter
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyThreadHelper
@@ -149,6 +150,16 @@ class TransView(
             true
         }
 
+        binding.viewTransChipGroup.chip2.setOnClickListener {
+            searchRepository.getImageList(editText!!.text.toString(), object : ResultListener{
+                override fun <T> onSuccess(data: T?) {
+                    data?.let {
+                        println(it)
+                    }
+                }
+            })
+        }
+
     }
 
     private fun searchVocab(keyWord: String) {
@@ -184,7 +195,7 @@ class TransView(
         Utils.hideKeyboard(context, editText!!)
     }
 
-//   --------------- freeze the things below (just kidding) ----------------------
+//   --------------- freeze the things below (just kidding) :D ----------------------
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun determineStarState(repo: LocalDatabaseRepository, keyWord: String) {

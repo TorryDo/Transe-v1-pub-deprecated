@@ -1,6 +1,7 @@
 package com.torrydo.transe.di
 
 import android.content.Context
+import androidx.work.WorkManager
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
@@ -9,6 +10,7 @@ import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.database.remote.FirebaseDaoImpl
 import com.torrydo.transe.dataSource.auth.FirebaseAuthenticationMethod
 import com.torrydo.transe.dataSource.auth.AuthenticationMethod
+import com.torrydo.transe.dataSource.image.ImageApiImpl
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
 import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
@@ -38,7 +40,7 @@ object ViewModelModule {
     @ViewModelScoped
     @Provides
     @Named(CONSTANT.viewModelSearchRepo)
-    fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl())
+    fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl(), ImageApiImpl())
 
     @ViewModelScoped
     @Provides
@@ -52,5 +54,10 @@ object ViewModelModule {
     @Named(CONSTANT.viewModelRemoteDB)
     fun provideRemoteDatabase(): RemoteDatabaseRepository =
         RemoteDatabaseRepositoryImpl(FirebaseDaoImpl())
+
+    @ViewModelScoped
+    @Provides
+    @Named(CONSTANT.viewModelNotificationWorker)
+    fun provideNotiWorker(@ApplicationContext context: Context) = WorkManager.getInstance(context)
 
 }
