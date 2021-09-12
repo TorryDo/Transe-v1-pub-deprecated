@@ -6,6 +6,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 object CONSTANT {
 
     const val PIXABAY_KEY = "19486905-b9e17d4e6d0dd6b4a1e5a0c82"
+    // this api-key is used for preview purpose
 
     var KeyWord_Holder = ""
 
