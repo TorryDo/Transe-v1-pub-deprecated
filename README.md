@@ -4,10 +4,11 @@
 * Nguyễn Đỗ Trí
 
 ### Content
-I. Requirement
+I. Features
   * Quick Translation via Floating window
-  * Login by Google Account
-  * Study with your big collection of Vocabulary
+  * Login using Google Account
+  * Notify random vocabulary
+  * Study with your large collection of Vocabulary
 
 II. Technology
   * Kotlin coroutines
@@ -19,6 +20,14 @@ II. Technology
   * Lottie library
   * Jsoup Library
   * Other components & skills are also applied
+  
+III. Time Consuming
+- About 2 month non-consecutively
+
+IV. Condition
+- Still **Updating** and **Developing**
+
+V. Preview
 
 
 

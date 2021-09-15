@@ -14,8 +14,8 @@ interface VocabDao {
     @Query("SELECT * FROM $VOCAB_TABLE_NAME")
     fun getAllLiveData(): LiveData<List<Vocab>>
 
-//    @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE uid IN (:userIds)")
-//    fun loadAllByIds(userIds: IntArray): LiveData<List<Vocab>>
+    @Query("SELECT * FROM $VOCAB_TABLE_NAME ORDER BY RANDOM() LIMIT 1")
+    fun getRandomVocab() : Vocab
 
     @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE vocab LIKE :keyword limit 1")
     fun loadVocabByKeyword(keyword : String) : Vocab?
@@ -37,3 +37,6 @@ interface VocabDao {
 
 
 }
+
+//    @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE uid IN (:userIds)")
+//    fun loadAllByIds(userIds: IntArray): LiveData<List<Vocab>>

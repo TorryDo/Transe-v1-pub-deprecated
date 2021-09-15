@@ -3,6 +3,7 @@ package com.torrydo.transe.ui.mainAppScreen.settingScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.auth.models.UserAccountInfo
@@ -38,8 +39,7 @@ class SettingViewModel @Inject constructor(
 
     val TAG_NOTI_WORKER = "tagNotiWorker"
     fun registerVocabNoti() {
-        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(10, TimeUnit.SECONDS)
+        val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.HOURS)
             .addTag(TAG_NOTI_WORKER)
             .build()
 
