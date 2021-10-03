@@ -3,9 +3,9 @@ package com.torrydo.transe.dataSource.database.local
 import androidx.room.TypeConverter
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Types
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
-import com.torrydo.transe.dataSource.translation.vi.ViResult
 import com.torrydo.transe.utils.CONSTANT
+import com.torrydo.vocabsource.eng.models.EngResult
+import com.torrydo.vocabsource.vi.ViResult
 import java.sql.Date
 
 class RoomConverter {

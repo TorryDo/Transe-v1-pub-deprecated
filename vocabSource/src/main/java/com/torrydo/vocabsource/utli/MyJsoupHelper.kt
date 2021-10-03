@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.translation
+package com.torrydo.vocabsource.utli
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

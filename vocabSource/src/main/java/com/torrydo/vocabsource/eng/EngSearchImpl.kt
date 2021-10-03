@@ -1,21 +1,16 @@
-package com.torrydo.transe.dataSource.translation.eng
+package com.torrydo.vocabsource.eng
 
-import android.util.Log
-import com.torrydo.transe.dataSource.translation.MyJsoupHelper
-import com.torrydo.transe.interfaces.ListResultListener
-import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
-import com.torrydo.transe.interfaces.RequestListener
-import com.torrydo.transe.utils.MyThreadHelper
-import org.jsoup.nodes.Document
+import com.torrydo.vocabsource.utli.MyJsoupHelper
+import com.torrydo.vocabsource.ResponseVocabList
+import com.torrydo.vocabsource.eng.models.EngResult
+import com.torrydo.vocabsource.eng.models.InnerEngResult
+import com.torrydo.vocabsource.eng.pronunciation.models.Pronunciation
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
+internal class EngSearchImpl : EngSearch {
 
-class EngSearchImpl : EngSearch {
-
-    private val TAG = "_TAG_EngSearchImpl"
+    private val TAG = "vocabSource-EngSearchImpl"
 
     private val baseUrlPreparedForAudioDownloader = "https://dictionary.cambridge.org"
     private val mainUrl = "https://dictionary.cambridge.org/dictionary/english/"
@@ -23,7 +18,7 @@ class EngSearchImpl : EngSearch {
     private var myJsoupHelper: MyJsoupHelper? = null
 
     init {
-        if(myJsoupHelper == null){
+        if (myJsoupHelper == null) {
             myJsoupHelper = MyJsoupHelper()
         }
 
@@ -31,7 +26,7 @@ class EngSearchImpl : EngSearch {
 
     override fun getResult(
         keyWord: String,
-        listResultListener: ListResultListener
+        responseVocabList: ResponseVocabList
     ) {
         Thread {
             try {
@@ -42,16 +37,17 @@ class EngSearchImpl : EngSearch {
                         .first()
                         .select("div.pr.entry-body__el")
 
+
+
                 val rsList = getTranslation(elements) as ArrayList<EngResult>
 
-                MyThreadHelper().startOnMainThread(object : RequestListener {
-                    override fun request() {
-                        listResultListener.onSuccess(rsList)
-                    }
-                })
+                Runnable {
+                    responseVocabList.onSuccess(rsList)
+                }
+
 
             } catch (e: Exception) {
-                listResultListener.onError(e)
+                responseVocabList.onError(e)
             }
         }.start()
     }
@@ -82,7 +78,7 @@ class EngSearchImpl : EngSearch {
                         .first()
                         .attr("src")
         } catch (e: Exception) {
-            Log.e(TAG, "message = ${e.message}")
+            print("message = ${e.message}")
             "null"
         }
     }

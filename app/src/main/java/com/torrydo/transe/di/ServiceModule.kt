@@ -7,8 +7,8 @@ import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.image.ImageApiImpl
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
-import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
 import com.torrydo.transe.utils.CONSTANT
+import com.torrydo.vocabsource.VocabSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +32,10 @@ object ServiceModule {
     @ServiceScoped
     @Provides
     @Named(CONSTANT.serviceSearchRepo)
-    fun provideSearchRepository() = SearchRepositoryImpl(EngSearchImpl(), ImageApiImpl())
+    fun provideSearchRepository() = SearchRepositoryImpl(
+        vocabSource = VocabSource(),
+        imageSearch = ImageApiImpl()
+    )
 
     @ServiceScoped
     @Provides
