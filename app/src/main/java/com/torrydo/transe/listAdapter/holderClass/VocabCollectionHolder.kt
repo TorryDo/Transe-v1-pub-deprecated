@@ -1,4 +1,4 @@
-package com.torrydo.transe.adapter.holderClass
+package com.torrydo.transe.listAdapter.holderClass
 
 import android.content.res.ColorStateList
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.adapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.databinding.ItemVocabCollectionBinding
 import com.torrydo.transe.interfaces.VocabListenter

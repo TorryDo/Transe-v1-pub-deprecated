@@ -1,4 +1,6 @@
 package com.torrydo.transe.adapter.vocabSource.model
 
-class Pronunciation {
-}
+data class Pronunciation(
+    val text: String,
+    val url: String
+)

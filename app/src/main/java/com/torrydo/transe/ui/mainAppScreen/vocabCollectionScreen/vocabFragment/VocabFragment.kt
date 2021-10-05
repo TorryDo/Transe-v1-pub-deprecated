@@ -8,8 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.adapter.base.GenericAdapter
-import com.torrydo.transe.adapter.holderClass.VocabHolder
+import com.torrydo.transe.listAdapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.holderClass.VocabHolder
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation

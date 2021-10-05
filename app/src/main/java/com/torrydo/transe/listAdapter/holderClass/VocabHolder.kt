@@ -1,11 +1,11 @@
-package com.torrydo.transe.adapter.holderClass
+package com.torrydo.transe.listAdapter.holderClass
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.adapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper

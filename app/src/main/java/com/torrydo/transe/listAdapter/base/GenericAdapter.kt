@@ -1,4 +1,4 @@
-package com.torrydo.transe.adapter.base
+package com.torrydo.transe.listAdapter.base
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -1,8 +1,8 @@
-package com.torrydo.transe.adapter.holderClass
+package com.torrydo.transe.listAdapter.holderClass
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.torrydo.transe.adapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.databinding.ItemInnerResultBinding
 import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
 

@@ -1,16 +1,16 @@
 package com.torrydo.transe.dataSource.translation
 
+import com.torrydo.transe.adapter.vocabSource.VocabSourceAdapter
 import com.torrydo.transe.dataSource.image.ImageApi
 import com.torrydo.transe.dataSource.image.model.ImageApiModel
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
-import com.torrydo.vocabsource.VocabSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SearchRepositoryImpl(
-    private val vocabSource: VocabSource,
+    private val vocabSourceAdapter: VocabSourceAdapter,
     private val imageSearch: ImageApi
 ) : SearchRepository {
 
@@ -18,12 +18,10 @@ class SearchRepositoryImpl(
         keyWord: String,
         listResultListener: ListResultListener
     ) {
-//        engSearch.getResult(keyWord, listResultListener)
-        vocabSource.search(keyWord) { data ->
-            listResultListener.onSuccess(data)
-        }
+        vocabSourceAdapter.search(keyWord, listResultListener)
     }
 
+    @Deprecated("not updated yet")
     override fun getImageList(keyWord: String, resultListener: ResultListener) {
 
         Thread {

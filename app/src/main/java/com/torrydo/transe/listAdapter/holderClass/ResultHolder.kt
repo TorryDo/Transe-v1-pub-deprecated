@@ -1,15 +1,14 @@
-package com.torrydo.transe.adapter.holderClass
+package com.torrydo.transe.listAdapter.holderClass
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.adapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
 import com.torrydo.transe.databinding.ItemInnerResultBinding
