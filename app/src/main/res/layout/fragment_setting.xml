@@ -1,81 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <variable
-            name="viewModel"
-            type="com.torrydo.transe.ui.mainAppScreen.settingScreen.SettingViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.mainAppScreen.settingScreen.SettingFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mainAppScreen.settingScreen.SettingFragment">
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/settingCard"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/settingCard"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
 
-            android:layout_margin="@dimen/margin_big"
-            app:cardCornerRadius="@dimen/rounded_corner_medium"
-            app:cardElevation="@dimen/elevation_medium"
+        android:layout_margin="@dimen/margin_big"
+        app:cardCornerRadius="@dimen/rounded_corner_medium"
+        app:cardElevation="@dimen/elevation_medium"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <TextView
-                    android:id="@+id/settingName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_medium"
-                    android:text="@{viewModel.userAccount.name}"
-                    android:gravity="start"
-                    android:textSize="@dimen/text_big"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/settingEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:text="@{viewModel.userAccount.email}"
-                    android:textSize="@dimen/text_big"
-                    android:layout_margin="@dimen/margin_medium"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/settingName"
-                    />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <include
-            android:id="@+id/settingOption1"
-            layout="@layout/setting_option"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="match_parent">
 
-            android:layout_marginTop="@dimen/margin_medium"
 
-            app:layout_constraintTop_toBottomOf="@id/settingCard"
-            />
+            <TextView
+                android:id="@+id/settingName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:gravity="start"
+                android:text="name"
+                android:textSize="@dimen/text_big"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+            <TextView
+                android:id="@+id/settingEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="@dimen/margin_medium"
+                android:text="email"
+                android:textSize="@dimen/text_big"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/settingName" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <include
+        android:id="@+id/settingOption1"
+        layout="@layout/setting_option"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginTop="@dimen/margin_medium"
+
+        app:layout_constraintTop_toBottomOf="@id/settingCard" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

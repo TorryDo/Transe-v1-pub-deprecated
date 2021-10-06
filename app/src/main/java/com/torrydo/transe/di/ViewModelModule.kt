@@ -2,18 +2,18 @@ package com.torrydo.transe.di
 
 import android.content.Context
 import androidx.work.WorkManager
+import com.torrydo.transe.adapter.vocabSource.VocabSourceAdapter
+import com.torrydo.transe.dataSource.auth.AuthenticationMethod
+import com.torrydo.transe.dataSource.auth.FirebaseAuthenticationMethod
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.database.remote.FirebaseDaoImpl
-import com.torrydo.transe.dataSource.auth.FirebaseAuthenticationMethod
-import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.image.ImageApiImpl
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.dataSource.translation.SearchRepositoryImpl
-import com.torrydo.transe.dataSource.translation.eng.EngSearchImpl
 import com.torrydo.transe.utils.CONSTANT
 import dagger.Module
 import dagger.Provides
@@ -40,7 +40,10 @@ object ViewModelModule {
     @ViewModelScoped
     @Provides
     @Named(CONSTANT.viewModelSearchRepo)
-    fun provideSearchRepository(): SearchRepository = SearchRepositoryImpl(EngSearchImpl(), ImageApiImpl())
+    fun provideSearchRepository(): SearchRepository =
+        SearchRepositoryImpl(
+            vocabSourceAdapter = VocabSourceAdapter(),
+            imageSearch = ImageApiImpl())
 
     @ViewModelScoped
     @Provides

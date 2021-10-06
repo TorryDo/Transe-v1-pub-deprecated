@@ -3,7 +3,6 @@ package com.torrydo.transe.di
 import android.content.Context
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.MyPopupMenuHelper
 import dagger.Module
@@ -34,11 +33,11 @@ object ActivityModule {
     ) = LocalDatabaseRepositoryImpl(
         vocabDao = MyRoomDatabase.getMyRoomDatabase(context).vocabDao()
     )
-    @ActivityScoped
-    @Provides
-    @Named(CONSTANT.activityPronunciation)
-    fun providePronunciationHelper(
-        @ApplicationContext context: Context
-    ) =  PronunciationHelper(context)
+//    @ActivityScoped
+//    @Provides
+//    @Named(CONSTANT.activityPronunciation)
+//    fun providePronunciationHelper(
+//        @ApplicationContext context: Context
+//    ) =  PronunciationHelper(context)
 
 }

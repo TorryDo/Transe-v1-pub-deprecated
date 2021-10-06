@@ -21,6 +21,7 @@ class SearchRepositoryImpl(
         vocabSourceAdapter.search(keyWord, listResultListener)
     }
 
+
     @Deprecated("not updated yet")
     override fun getImageList(keyWord: String, resultListener: ResultListener) {
 

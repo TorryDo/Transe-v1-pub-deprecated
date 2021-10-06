@@ -2,18 +2,19 @@ package com.torrydo.transe.listAdapter.holderClass
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.listAdapter.base.GenericAdapter
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
-import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
+import com.torrydo.transe.adapter.vocabSource.model.SearchResult
+import com.torrydo.transe.adapter.vocabSource.model.SearchResultItem
 import com.torrydo.transe.databinding.ItemInnerResultBinding
 import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.interfaces.VocabListenter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.utils.CONSTANT
 
 class ResultHolder(
@@ -21,19 +22,20 @@ class ResultHolder(
     private val vocabListenter: VocabListenter
 ) :
     RecyclerView.ViewHolder(binding.root),
-    GenericAdapter.Binder<EngResult> {
+    GenericAdapter.Binder<SearchResult> {
 
-    private fun requestOnClick(item: EngResult) {
+    private fun requestOnClick(item: SearchResult) {
         binding.itemResultAudio.setOnClickListener {
-            vocabListenter.playPronunciation(
-                CONSTANT.KeyWord_Holder,
-                item.pronunciation
-            )
+//            vocabListenter.playPronunciation(
+//                CONSTANT.KeyWord_Holder,
+//                item.pronunciation
+//            )
+            Log.i("item click", "play pronun is being maintain")
         }
     }
 
     @SuppressLint("SetTextI18n")
-    override fun bind(item: EngResult, position: Int) {
+    override fun bind(item: SearchResult, position: Int) {
         binding.itemResultType.also { tv ->
             val tempType = item.type
             when (tempType) {
@@ -56,10 +58,10 @@ class ResultHolder(
             tv.text = "[$tempType]"
         }
         binding.itemResultPronounce.text =
-            "/" + item.pronunciation.text + "/"
+            "/" + item.pronun.text + "/"
 
-        val tempList = ArrayList<InnerEngResult>()
-        tempList.addAll(item.innerEngResultList)
+        val tempList = ArrayList<SearchResultItem>()
+        tempList.addAll(item.searchResultItemList)
 
         initInnerRecyclerView(
             binding.root.context,
@@ -74,10 +76,10 @@ class ResultHolder(
     private fun initInnerRecyclerView(
         context: Context,
         recyclerView: RecyclerView,
-        innerEngResultList: ArrayList<InnerEngResult>
+        innerEngResultList: ArrayList<SearchResultItem>
     ) {
-        val adapterInnerResult = object : GenericAdapter<InnerEngResult>(innerEngResultList) {
-            override fun getLayoutId(position: Int, obj: InnerEngResult): Int {
+        val adapterInnerResult = object : GenericAdapter<SearchResultItem>(innerEngResultList) {
+            override fun getLayoutId(position: Int, obj: SearchResultItem): Int {
                 return R.layout.item_inner_result
             }
 

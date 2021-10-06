@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.torrydo.transe.R
+import com.torrydo.transe.adapter.vocabSource.model.SearchResult
 import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.listAdapter.holderClass.ResultHolder
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.translation.SearchRepository
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import com.torrydo.transe.databinding.ItemResultBinding
 import com.torrydo.transe.databinding.ViewTransBinding
 import com.torrydo.transe.interfaces.ListResultListener
@@ -46,10 +44,10 @@ class TransView(
     private var clickedBackButton: () -> Unit
 ) : HomeLauncherBaseView<ViewTransBinding>(windowManager) {
 
-    private val pronunciationHelper = PronunciationHelper(context)
+//    private val pronunciationHelper = PronunciationHelper(context)
 
-    private var engResultList = ArrayList<EngResult>()
-    private var adapterEng: GenericAdapter<EngResult>? = null
+    private var engResultList = ArrayList<SearchResult>()
+    private var adapterEng: GenericAdapter<SearchResult>? = null
 
     private var editText: EditText? = null
 
@@ -104,7 +102,7 @@ class TransView(
 
                             val strBuilder = StringBuilder()
                             try {
-                                for (inner in engResultList[0].innerEngResultList) {
+                                for (inner in engResultList[0].searchResultItemList) {
                                     strBuilder.append("• ${inner.title} \n")
                                 }
                             } catch (e: Exception) {
@@ -119,8 +117,7 @@ class TransView(
                                     time = Date(System.currentTimeMillis()),
                                     vocab = KEY_WORD,
                                     finished = false,
-                                    contentEng = engResultList,
-                                    contentVi = emptyList()
+                                    contentEng = engResultList
                                 )
                             )
                             STAR_TYPE = STAR_SAVED
@@ -169,8 +166,8 @@ class TransView(
         try {
             searchRepository.getEnglishSource(keyWord, object : ListResultListener {
                 override fun <T> onSuccess(dataList: List<T>) {
-                    if (dataList[0] is EngResult) {
-                        engResultList = dataList as ArrayList<EngResult>
+                    if (!dataList.isNullOrEmpty() && dataList[0] is SearchResult ) {
+                        engResultList = dataList as ArrayList<SearchResult>
                         adapterEng?.setItems(dataList)
 
                         CONSTANT.KeyWord_Holder = keyWord
@@ -232,8 +229,8 @@ class TransView(
 
     private fun initRecyclerView() {
 
-        adapterEng = object : GenericAdapter<EngResult>(engResultList) {
-            override fun getLayoutId(position: Int, obj: EngResult): Int {
+        adapterEng = object : GenericAdapter<SearchResult>(engResultList) {
+            override fun getLayoutId(position: Int, obj: SearchResult): Int {
                 return R.layout.item_result
             }
 
@@ -280,8 +277,9 @@ class TransView(
     }
 
     private inner class MyVocabListener : VocabListenter {
-        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
-            pronunciationHelper.playAudio(keyWord, pronunciation)
+        override fun playPronunciation(keyWord: String/*, pronunciation: Pronunciation*/) {
+//            pronunciationHelper.playAudio(keyWord/*, pronunciation*/)
+            Log.i(TAG, "fake play pronun")
         }
     }
 

@@ -11,14 +11,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.listAdapter.base.GenericAdapter
-import com.torrydo.transe.listAdapter.holderClass.VocabCollectionHolder
 import com.torrydo.transe.dataSource.database.local.models.Vocab
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import com.torrydo.transe.databinding.FragmentVocabCollectionBinding
 import com.torrydo.transe.databinding.ItemVocabCollectionBinding
 import com.torrydo.transe.interfaces.VocabListenter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.holderClass.VocabCollectionHolder
 import com.torrydo.transe.service.searchService.LauncherSearchService
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.ui.mainAppScreen.MainViewModel
@@ -38,9 +36,9 @@ class VocabCollectionFragment :
         var TAB_FINISHED = false
     }
 
-    @Inject
-    @Named(CONSTANT.activityPronunciation)
-    lateinit var pronunciationHelper: PronunciationHelper
+//    @Inject
+//    @Named(CONSTANT.activityPronunciation)
+//    lateinit var pronunciationHelper: PronunciationHelper
 
     @Inject
     @Named(CONSTANT.activityPopupMenuHelper)
@@ -233,9 +231,9 @@ class VocabCollectionFragment :
             Utils.showShortToast(requireContext(), "deleting")
         }
 
-        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
-            pronunciationHelper.playAudio(keyWord, pronunciation)
-        }
+//        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
+//            pronunciationHelper.playAudio(keyWord, pronunciation)
+//        }
     }
 
 }

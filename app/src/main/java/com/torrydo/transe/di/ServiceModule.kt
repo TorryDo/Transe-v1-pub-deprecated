@@ -3,6 +3,7 @@ package com.torrydo.transe.di
 import android.app.Service
 import android.content.Context
 import android.view.WindowManager
+import com.torrydo.transe.adapter.vocabSource.VocabSourceAdapter
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepositoryImpl
 import com.torrydo.transe.dataSource.database.local.MyRoomDatabase
 import com.torrydo.transe.dataSource.image.ImageApiImpl
@@ -33,7 +34,7 @@ object ServiceModule {
     @Provides
     @Named(CONSTANT.serviceSearchRepo)
     fun provideSearchRepository() = SearchRepositoryImpl(
-        vocabSource = VocabSource(),
+        vocabSourceAdapter = VocabSourceAdapter(),
         imageSearch = ImageApiImpl()
     )
 

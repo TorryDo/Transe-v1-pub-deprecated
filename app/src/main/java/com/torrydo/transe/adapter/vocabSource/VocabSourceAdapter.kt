@@ -7,7 +7,9 @@ import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.vocabsource.VocabSource
 import com.torrydo.vocabsource.eng.models.EngResult
 
-class VocabSourceAdapter(private val vocabSource: VocabSource) : VocabTranslator {
+class VocabSourceAdapter() : VocabTranslator {
+
+    private var vocabSource: VocabSource = VocabSource()
 
     override fun search(keyWord: String, listResultListener: ListResultListener) {
         try {
@@ -20,9 +22,11 @@ class VocabSourceAdapter(private val vocabSource: VocabSource) : VocabTranslator
     }
 
     // adapt from module object to searchResult
-    private fun EngResult.toSearchResult(): SearchResult {
-        return SearchResult(
+    private fun EngResult.toSearchResult() =
+        SearchResult(
             vocab = this.vocab,
+            destination = 0,
+            type = this.type,
             pronun = Pronunciation(
                 this.pronunciation.text,
                 this.pronunciation.url
@@ -34,5 +38,5 @@ class VocabSourceAdapter(private val vocabSource: VocabSource) : VocabTranslator
                 )
             }
         )
-    }
+
 }

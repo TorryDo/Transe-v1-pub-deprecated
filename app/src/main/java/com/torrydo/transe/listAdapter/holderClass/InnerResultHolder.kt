@@ -2,15 +2,15 @@ package com.torrydo.transe.listAdapter.holderClass
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.torrydo.transe.adapter.vocabSource.model.SearchResultItem
 import com.torrydo.transe.listAdapter.base.GenericAdapter
 import com.torrydo.transe.databinding.ItemInnerResultBinding
-import com.torrydo.transe.dataSource.translation.eng.models.InnerEngResult
 
 class InnerResultHolder(
     private val binding: ItemInnerResultBinding
 ) :
     RecyclerView.ViewHolder(binding.root),
-    GenericAdapter.Binder<InnerEngResult>
+    GenericAdapter.Binder<SearchResultItem>
 {
 
     private fun requestOnClick() {
@@ -28,7 +28,7 @@ class InnerResultHolder(
         }
     }
 
-    override fun bind(item: InnerEngResult, position: Int) {
+    override fun bind(item: SearchResultItem, position: Int) {
         binding.itemInnerResultTxtTitle.text = item.title
         binding.itemInnerResultTxtContent.text = item.examples
 

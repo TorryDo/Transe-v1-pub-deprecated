@@ -27,7 +27,7 @@ class NotificationWorker(
 
         val title = randomVocab?.vocab ?: "null"
         val content = randomVocab?.let {
-            it.contentEng[0].innerEngResultList[0].title
+            it.contentEng[0].searchResultItemList[0].title
         } ?: "null"
 
         NotificationHelper(context).showNotification(

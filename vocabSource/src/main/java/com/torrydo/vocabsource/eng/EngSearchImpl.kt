@@ -1,10 +1,10 @@
 package com.torrydo.vocabsource.eng
 
-import com.torrydo.vocabsource.utli.MyJsoupHelper
 import com.torrydo.vocabsource.ResponseVocabList
 import com.torrydo.vocabsource.eng.models.EngResult
 import com.torrydo.vocabsource.eng.models.InnerEngResult
 import com.torrydo.vocabsource.eng.pronunciation.models.Pronunciation
+import com.torrydo.vocabsource.utli.MyJsoupHelper
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
@@ -28,7 +28,8 @@ internal class EngSearchImpl : EngSearch {
         keyWord: String,
         responseVocabList: ResponseVocabList
     ) {
-        Thread {
+        var rsList = ArrayList<EngResult>()
+        val mThread = Thread {
             try {
                 val doc = MyJsoupHelper().connect(mainUrl + keyWord)
 
@@ -37,19 +38,20 @@ internal class EngSearchImpl : EngSearch {
                         .first()
                         .select("div.pr.entry-body__el")
 
-
-
-                val rsList = getTranslation(elements) as ArrayList<EngResult>
-
-                Runnable {
-                    responseVocabList.onSuccess(rsList)
-                }
+                rsList = getTranslation(keyWord, elements) as ArrayList<EngResult>
 
 
             } catch (e: Exception) {
                 responseVocabList.onError(e)
+                println(e.message)
             }
-        }.start()
+        }
+        mThread.start()
+        mThread.join()
+
+        if (!rsList.isNullOrEmpty())
+            responseVocabList.onSuccess(rsList)
+        else println("EngSearchImpl - rsLIst null/empty")
     }
 
 
@@ -83,7 +85,7 @@ internal class EngSearchImpl : EngSearch {
         }
     }
 
-    private fun getTranslation(source: Elements): List<EngResult> {
+    private fun getTranslation(keyWord: String, source: Elements): List<EngResult> {
 
         val engResultList: ArrayList<EngResult> = ArrayList()
 
@@ -117,9 +119,10 @@ internal class EngSearchImpl : EngSearch {
 
             engResultList.add(
                 EngResult(
-                    type,
-                    pronunciation,
-                    irList
+                    vocab = keyWord,
+                    type = type,
+                    pronunciation = pronunciation,
+                    innerEngResultList = irList
                 )
             )
         }

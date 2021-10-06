@@ -34,7 +34,10 @@ class SettingFragment : BaseFragment<SettingViewModel, FragmentSettingBinding>()
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) {
-        binding.viewModel = viewModel
+        viewModel.userAccount.observe(viewLifecycleOwner,{
+            binding.settingName.text = it.name
+            binding.settingEmail.text = it.email
+        })
         setup()
     }
 

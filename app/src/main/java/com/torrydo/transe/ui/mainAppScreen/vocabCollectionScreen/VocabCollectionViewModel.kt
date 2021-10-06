@@ -3,13 +3,13 @@ package com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.torrydo.transe.adapter.vocabSource.model.SearchResult
 import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
 import com.torrydo.transe.dataSource.database.remote.BaseVocab
 import com.torrydo.transe.dataSource.translation.SearchRepository
-import com.torrydo.transe.dataSource.translation.eng.models.EngResult
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
 import com.torrydo.transe.utils.CONSTANT
@@ -169,15 +169,14 @@ class VocabCollectionViewModel @Inject constructor(
     ) {
         searchRepository.getEnglishSource(baseVocab.keyWord, object : ListResultListener {
             override fun <T> onSuccess(dataList: List<T>) {
-                if (dataList[0] is EngResult) {
-                    val engResultList = dataList as ArrayList<EngResult>
+                if (dataList[0] is SearchResult) {
+                    val engResultList = dataList as ArrayList<SearchResult>
                     val vocab = Vocab(
                         uid = 0,
                         vocab = baseVocab.keyWord,
                         time = Date(baseVocab.time),
                         finished = baseVocab.finished,
-                        contentEng = engResultList,
-                        contentVi = emptyList()
+                        contentEng = engResultList
                     )
 
                     isReady(vocab)

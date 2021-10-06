@@ -27,7 +27,7 @@ class VocabCollectionHolder(
             vocabListenter.onTouch(position)
         }
         viewBinding.itemVocabColTitle.setOnClickListener { view ->
-            vocabListenter.playPronunciation(item.vocab, item.contentEng[0].pronunciation)
+            vocabListenter.playPronunciation(item.vocab/*, item.contentEng[0].pronun*/)
         }
 
         viewBinding.itemVocabCol3dots.setOnClickListener { view ->
@@ -79,16 +79,16 @@ class VocabCollectionHolder(
 
             when (type) {
                 CONSTANT.NOUN -> {
-                    nounCount = engRsList.innerEngResultList.size.toFloat()
+                    nounCount = engRsList.searchResultItemList.size.toFloat()
                 }
                 CONSTANT.VERB -> {
-                    verbCount = engRsList.innerEngResultList.size.toFloat()
+                    verbCount = engRsList.searchResultItemList.size.toFloat()
                 }
                 CONSTANT.ADJ -> {
-                    adjCount = engRsList.innerEngResultList.size.toFloat()
+                    adjCount = engRsList.searchResultItemList.size.toFloat()
                 }
             }
-            contentBuilder.append("• $type : ${engRsList.innerEngResultList[0].title}\n")
+            contentBuilder.append("• $type : ${engRsList.searchResultItemList[0].title}\n")
 
         }
 

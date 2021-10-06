@@ -1,6 +1,7 @@
 package com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen.vocabFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
@@ -8,14 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.torrydo.transe.R
-import com.torrydo.transe.listAdapter.base.GenericAdapter
-import com.torrydo.transe.listAdapter.holderClass.VocabHolder
 import com.torrydo.transe.dataSource.database.local.models.Vocab
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.PronunciationHelper
-import com.torrydo.transe.dataSource.translation.eng.pronunciation.models.Pronunciation
 import com.torrydo.transe.databinding.FragmentVocabBinding
 import com.torrydo.transe.databinding.ItemVocabBinding
 import com.torrydo.transe.interfaces.VocabListenter
+import com.torrydo.transe.listAdapter.base.GenericAdapter
+import com.torrydo.transe.listAdapter.holderClass.VocabHolder
 import com.torrydo.transe.ui.base.BaseFragment
 import com.torrydo.transe.ui.mainAppScreen.MainViewModel
 import com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen.VocabCollectionFragment
@@ -23,16 +22,17 @@ import com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen.VocabCollection
 import com.torrydo.transe.utils.CONSTANT
 import com.torrydo.transe.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
 @Named(CONSTANT.fragmentModule)
 class VocabFragment : BaseFragment<VocabCollectionViewModel, FragmentVocabBinding>() {
 
-    @Inject
-    @Named(CONSTANT.fragmentPronunciation)
-    lateinit var pronunciationHelper: PronunciationHelper
+    private val TAG = "_VocabFragment"
+
+//    @Inject
+//    @Named(CONSTANT.fragmentPronunciation)
+//    lateinit var pronunciationHelper: PronunciationHelper
 
     private val activityViewModel: MainViewModel by activityViewModels()
     private val mVM: VocabCollectionViewModel by viewModels()
@@ -59,11 +59,11 @@ class VocabFragment : BaseFragment<VocabCollectionViewModel, FragmentVocabBindin
 
     private fun setup() {
 
-        if(VocabCollectionFragment.TAB_FINISHED){
+        if (VocabCollectionFragment.TAB_FINISHED) {
             activityViewModel.vocabListFinished.value?.let { vl ->
                 initRecyclerView(vl)
             }
-        }else{
+        } else {
             activityViewModel.vocabListNotFinished.value?.let { vl ->
                 initRecyclerView(vl)
             }
@@ -107,8 +107,9 @@ class VocabFragment : BaseFragment<VocabCollectionViewModel, FragmentVocabBindin
             Utils.showShortToast(requireContext(), "deleting")
         }
 
-        override fun playPronunciation(keyWord: String, pronunciation: Pronunciation) {
-            pronunciationHelper.playAudio(keyWord, pronunciation)
+        override fun playPronunciation(keyWord: String/*, pronunciation: Pronunciation*/) {
+//            pronunciationHelper.playAudio(keyWord/*, pronunciation*/)
+            Log.i(TAG, "fake play audio")
         }
     }
 }
