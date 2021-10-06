@@ -36,10 +36,6 @@ class VocabCollectionFragment :
         var TAB_FINISHED = false
     }
 
-//    @Inject
-//    @Named(CONSTANT.activityPronunciation)
-//    lateinit var pronunciationHelper: PronunciationHelper
-
     @Inject
     @Named(CONSTANT.activityPopupMenuHelper)
     lateinit var popupMenuHelper: MyPopupMenuHelper

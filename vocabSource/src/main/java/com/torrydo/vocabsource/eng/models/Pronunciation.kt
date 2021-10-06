@@ -1,4 +1,4 @@
-package com.torrydo.vocabsource.eng.pronunciation.models
+package com.torrydo.vocabsource.eng.models
 
 data class Pronunciation(
     val text: String,

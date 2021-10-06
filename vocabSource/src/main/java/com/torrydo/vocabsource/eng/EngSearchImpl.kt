@@ -3,7 +3,7 @@ package com.torrydo.vocabsource.eng
 import com.torrydo.vocabsource.ResponseVocabList
 import com.torrydo.vocabsource.eng.models.EngResult
 import com.torrydo.vocabsource.eng.models.InnerEngResult
-import com.torrydo.vocabsource.eng.pronunciation.models.Pronunciation
+import com.torrydo.vocabsource.eng.models.Pronunciation
 import com.torrydo.vocabsource.utli.MyJsoupHelper
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements

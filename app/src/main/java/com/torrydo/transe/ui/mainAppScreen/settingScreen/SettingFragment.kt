@@ -24,21 +24,21 @@ class SettingFragment : BaseFragment<SettingViewModel, FragmentSettingBinding>()
     override fun getViewModelClass() = mViewModel
     override fun getViewBinding() = FragmentSettingBinding.inflate(layoutInflater)
 
-//    init {
-//        VocabFragment.TAB_FINISHED = true
-//    }
-
     @SuppressLint("ResourceType")
     override fun configOnCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) {
-        viewModel.userAccount.observe(viewLifecycleOwner,{
-            binding.settingName.text = it.name
-            binding.settingEmail.text = it.email
-        })
         setup()
+
+        viewModel.userAccount.observe(viewLifecycleOwner,{
+            try{
+                binding.settingName.text = it.name
+                binding.settingEmail.text = it.email
+            }catch (e:Exception){}
+        })
+
     }
 
     private fun setup() {

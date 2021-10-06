@@ -7,7 +7,7 @@ import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.vocabsource.VocabSource
 import com.torrydo.vocabsource.eng.models.EngResult
 
-class VocabSourceAdapter() : VocabTranslator {
+class VocabSourceAdapter : VocabTranslator {
 
     private var vocabSource: VocabSource = VocabSource()
 
@@ -22,8 +22,8 @@ class VocabSourceAdapter() : VocabTranslator {
     }
 
     // adapt from module object to searchResult
-    private fun EngResult.toSearchResult() =
-        SearchResult(
+    private fun EngResult.toSearchResult() : SearchResult {
+        return SearchResult(
             vocab = this.vocab,
             destination = 0,
             type = this.type,
@@ -38,5 +38,6 @@ class VocabSourceAdapter() : VocabTranslator {
                 )
             }
         )
+    }
 
 }

@@ -31,7 +31,6 @@ class VocabCollectionViewModel @Inject constructor(
 
     private val TAG = "_TAG_VocabVM"
 
-
     fun insertAllToRemoteDatabase(
         vocabList: List<Vocab>
     ) {
