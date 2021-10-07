@@ -20,6 +20,7 @@ import java.sql.Date
 import javax.inject.Inject
 import javax.inject.Named
 
+@Suppress("UNCHECKED_CAST")
 @HiltViewModel
 @Named(CONSTANT.viewModelModule)
 class VocabCollectionViewModel @Inject constructor(
@@ -30,33 +31,6 @@ class VocabCollectionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val TAG = "_TAG_VocabVM"
-
-    init {
-        Log.i(TAG, "----- start0 ---")
-        viewModelScope.launch {
-            Log.i(TAG, "----- start ---")
-            localDatabaseRepository.loadVocabByKeyword("add")?.let { vocab ->
-                val uid = getUserID() ?: return@launch
-                remoteDatabaseRepository.setUserID(uid)
-                remoteDatabaseRepository.update(
-                    vocab.toBaseVocab(),
-                    object : ResultListener {
-                        override fun <T> onSuccess(data: T?) {
-                            Log.i(TAG, "----- update success, ${vocab.finished} ---")
-                        }
-
-                        override fun onError(e: Exception) {
-                            Log.i(TAG, "----- update error, ${e.message}")
-                        }
-                    }
-                )
-                return@launch
-            }
-            Log.e(TAG, "ERORR fasdfifc")
-        }
-
-
-    }
 
     fun uploadAllVocabToRemoteDB() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -101,18 +75,20 @@ class VocabCollectionViewModel @Inject constructor(
                         val differenceVocabList = getDifferentElements(vocabList, baseVocabList)
 
                         var count = 0
+                        viewModelScope.launch(Dispatchers.IO) {
 
-                        differenceVocabList.forEach { baseVocab ->
-                            convertToVocab(baseVocab) { vocab ->
-                                viewModelScope.launch(Dispatchers.IO) {
-                                    localDatabaseRepository.insert(vocab)
-                                    count++
+                            differenceVocabList.forEach { baseVocab ->
+                                baseVocab.toVocab { vocab ->
+                                    viewModelScope.launch(Dispatchers.IO) {
+                                        localDatabaseRepository.insert(vocab)
+                                        count++
+                                    }
                                 }
                             }
-                        }
 
-                        if (count >= baseVocabList.size - 1) {
-                            isFinished()
+                            if (count >= baseVocabList.size - 1) {
+                                isFinished()
+                            }
                         }
 
 
@@ -182,26 +158,25 @@ class VocabCollectionViewModel @Inject constructor(
 
     // --------------------------- private func ---------------------------
 
-    private fun Vocab.toBaseVocab(): BaseVocab {
-        val keyWord = this.vocab
-        val time = this.time.time.toString()
-        val isFinished = this.finished.toString()
-        return BaseVocab(keyWord, time.toLong(), isFinished.toBoolean())
-    }
+    private fun Vocab.toBaseVocab() = BaseVocab(
+        keyWord = this.vocab,
+        time = this.time.time,
+        finished = this.finished
+    )
 
-    private fun convertToVocab(
-        baseVocab: BaseVocab,
+
+    private fun BaseVocab.toVocab(
         isReady: (vocab: Vocab) -> Unit
     ) {
-        searchRepository.getEnglishSource(baseVocab.keyWord, object : ListResultListener {
+        searchRepository.getEnglishSource(this.keyWord, object : ListResultListener {
             override fun <T> onSuccess(dataList: List<T>) {
                 if (dataList[0] is SearchResult) {
                     val engResultList = dataList as ArrayList<SearchResult>
                     val vocab = Vocab(
                         uid = 0,
-                        vocab = baseVocab.keyWord,
-                        time = Date(baseVocab.time),
-                        finished = baseVocab.finished,
+                        vocab = this@toVocab.keyWord,
+                        time = Date(this@toVocab.time),
+                        finished = this@toVocab.finished,
                         contentEng = engResultList
                     )
 
