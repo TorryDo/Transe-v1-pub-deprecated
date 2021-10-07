@@ -263,9 +263,8 @@ class TransView(
         localDatabaseRepository: LocalDatabaseRepository,
         isReady: (data: Vocab?) -> Unit
     ) {
-        localDatabaseRepository.get(keyWord) {
-            isReady(it)
-        }
+        val vocab = localDatabaseRepository.loadVocabByKeyword(keyWord)
+        isReady(vocab)
 
     }
 

@@ -8,7 +8,7 @@ import com.torrydo.transe.dataSource.auth.AuthenticationMethod
 import com.torrydo.transe.dataSource.database.LocalDatabaseRepository
 import com.torrydo.transe.dataSource.database.RemoteDatabaseRepository
 import com.torrydo.transe.dataSource.database.local.models.Vocab
-import com.torrydo.transe.dataSource.database.remote.BaseVocab
+import com.torrydo.transe.dataSource.database.remote.models.BaseVocab
 import com.torrydo.transe.dataSource.translation.SearchRepository
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
@@ -31,25 +31,55 @@ class VocabCollectionViewModel @Inject constructor(
 
     private val TAG = "_TAG_VocabVM"
 
-    fun insertAllToRemoteDatabase(
-        vocabList: List<Vocab>
-    ) {
+    init {
+        Log.i(TAG, "----- start0 ---")
+        viewModelScope.launch {
+            Log.i(TAG, "----- start ---")
+            localDatabaseRepository.loadVocabByKeyword("add")?.let { vocab ->
+                val uid = getUserID() ?: return@launch
+                remoteDatabaseRepository.setUserID(uid)
+                remoteDatabaseRepository.update(
+                    vocab.toBaseVocab(),
+                    object : ResultListener {
+                        override fun <T> onSuccess(data: T?) {
+                            Log.i(TAG, "----- update success, ${vocab.finished} ---")
+                        }
+
+                        override fun onError(e: Exception) {
+                            Log.i(TAG, "----- update error, ${e.message}")
+                        }
+                    }
+                )
+                return@launch
+            }
+            Log.e(TAG, "ERORR fasdfifc")
+        }
+
+
+    }
+
+    fun uploadAllVocabToRemoteDB() {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserID()?.let { uid ->
-                vocabList.forEach { vocab ->
 
-                    remoteDatabaseRepository.setUserID(uid)
-                    remoteDatabaseRepository.insert(
-                        convertToBaseVocab(vocab),
-                        object : ResultListener {
-                            override fun <T> onSuccess(data: T?) {
-                                Log.i(TAG, "insertion succeed")
-                            }
-                        })
+            val uid = getUserID()
+            if (uid == null) {
+                Log.e(TAG, "uid is null, sign in first")
+                return@launch
+            }
 
-                }
+            remoteDatabaseRepository.setUserID(uid)
+            localDatabaseRepository.getAll().forEach { vocab ->
+
+                remoteDatabaseRepository.insert(
+                    baseVocab = vocab.toBaseVocab(),
+                    object : ResultListener {
+                        override fun <T> onSuccess(data: T?) {
+                            Log.i(TAG, "insertion succeed")
+                        }
+                    })
 
             }
+
         }
     }
 
@@ -58,42 +88,43 @@ class VocabCollectionViewModel @Inject constructor(
         isFinished: () -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserID()?.let { uid ->
 
-                remoteDatabaseRepository.setUserID(uid)
-                remoteDatabaseRepository.getAll(object : ListResultListener {
-                    override fun <T> onSuccess(dataList: List<T>) {
-                        if (dataList.isNotEmpty() && dataList[0] is BaseVocab) {
+            val uid = getUserID() ?: return@launch
 
-                            val baseVocabList = dataList as List<BaseVocab>
+            remoteDatabaseRepository.setUserID(uid)
+            remoteDatabaseRepository.getAll(object : ListResultListener {
+                override fun <T> onSuccess(dataList: List<T>) {
+                    if (dataList.isNotEmpty() && dataList[0] is BaseVocab) {
 
-                            val differenceVocabList = getDifferentElements(vocabList, baseVocabList)
+                        val baseVocabList = dataList as List<BaseVocab>
 
-                            var count = 0
+                        val differenceVocabList = getDifferentElements(vocabList, baseVocabList)
 
-                            differenceVocabList.forEach { baseVocab ->
-                                convertToVocab(baseVocab) { vocab ->
-                                    viewModelScope.launch(Dispatchers.IO) {
-                                        localDatabaseRepository.insert(vocab)
-                                        count++
-                                    }
+                        var count = 0
+
+                        differenceVocabList.forEach { baseVocab ->
+                            convertToVocab(baseVocab) { vocab ->
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    localDatabaseRepository.insert(vocab)
+                                    count++
                                 }
                             }
-
-                            if (count >= baseVocabList.size - 1) {
-                                isFinished()
-                            }
-
-
                         }
-                    }
 
-                    override fun onError(e: Exception) {
-                        Log.e(TAG, e.message.toString())
-                    }
-                })
+                        if (count >= baseVocabList.size - 1) {
+                            isFinished()
+                        }
 
-            }
+
+                    }
+                }
+
+                override fun onError(e: Exception) {
+                    Log.e(TAG, e.message.toString())
+                }
+            })
+
+
         }
     }
 
@@ -102,63 +133,59 @@ class VocabCollectionViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            getUserID()?.let { uid ->
-                remoteDatabaseRepository.setUserID(uid)
-                remoteDatabaseRepository.delete(
-                    convertToBaseVocab(vocab),
-                    object : ResultListener {
-                        override fun <T> onSuccess(data: T?) {
-                            Log.i(TAG, "vocab deleted away from remoteDB")
-                        }
+            val uid = getUserID() ?: return@launch
 
-                        override fun onError(e: Exception) {
-                            Log.e(TAG, e.message.toString())
-                        }
+            remoteDatabaseRepository.setUserID(uid)
+            remoteDatabaseRepository.delete(
+                baseVocab = vocab.toBaseVocab(),
+                resultListener = object : ResultListener {
+                    override fun <T> onSuccess(data: T?) {
+                        Log.i(TAG, "vocab deleted away from remoteDB")
                     }
-                )
 
-                return@launch
-            }
-
-            Log.e(TAG, "pls signIn first")
+                    override fun onError(e: Exception) {
+                        Log.e(TAG, e.message.toString())
+                    }
+                }
+            )
 
         }
     }
 
-    fun updateVocabFromRemoteDB(
+    fun updateVocabToRemoteDB(
         vocab: Vocab
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserID()?.let { uid ->
-                remoteDatabaseRepository.setUserID(uid)
-                remoteDatabaseRepository.update(
-                    convertToBaseVocab(vocab),
-                    object : ResultListener {
 
-                        override fun <T> onSuccess(data: T?) {
-                            Log.i(TAG, "updated")
-                        }
+            val uid = getUserID() ?: return@launch
 
-                        override fun onError(e: Exception) {
-                            Log.e(TAG, e.message.toString())
-                        }
+            localDatabaseRepository.loadVocabByKeyword(vocab.vocab)
 
+            remoteDatabaseRepository.setUserID(uid)
+            remoteDatabaseRepository.update(
+                baseVocab = vocab.toBaseVocab(),
+                resultListener = object : ResultListener {
+
+                    override fun <T> onSuccess(data: T?) {
+                        Log.i(TAG, "updated")
                     }
-                )
-                return@launch
-            }
-            Log.e(TAG, "pls signIn first")
+
+                    override fun onError(e: Exception) {
+                        Log.e(TAG, e.message.toString())
+                    }
+
+                }
+            )
         }
     }
-
 
 
     // --------------------------- private func ---------------------------
 
-    private fun convertToBaseVocab(vocab: Vocab): BaseVocab {
-        val keyWord = vocab.vocab
-        val time = vocab.time.time.toString()
-        val isFinished = false.toString()
+    private fun Vocab.toBaseVocab(): BaseVocab {
+        val keyWord = this.vocab
+        val time = this.time.time.toString()
+        val isFinished = this.finished.toString()
         return BaseVocab(keyWord, time.toLong(), isFinished.toBoolean())
     }
 
@@ -196,21 +223,12 @@ class VocabCollectionViewModel @Inject constructor(
         if (vocabList.isNullOrEmpty()) return baseVocabList
         if (baseVocabList.isNullOrEmpty()) return emptyList()
 
-        val strVocab = ArrayList<String>()
-        val differenceRemoteVocab = ArrayList<BaseVocab>()
-
-        vocabList.forEach { vocab ->
-            strVocab.add(vocab.vocab)
+        val strVocabList = vocabList.map { it.vocab }
+        val res = baseVocabList.filterNot { baseVocab ->
+            strVocabList.contains(baseVocab.keyWord)
         }
-        baseVocabList.forEach { baseVocab ->
-            val keyWord = baseVocab.keyWord
 
-            val b = strVocab.contains(keyWord)
-            if (!b) {
-                differenceRemoteVocab.add(baseVocab)
-            }
-        }
-        return differenceRemoteVocab
+        return res
 
     }
 

@@ -1,4 +1,4 @@
-package com.torrydo.transe.dataSource.database.remote
+package com.torrydo.transe.dataSource.database.remote.models
 
 data class BaseVocab (
     val keyWord: String,

@@ -22,7 +22,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         fun getMyRoomDatabase(context: Context): MyRoomDatabase {
 
-            var temp = INSTANCE
+            val temp = INSTANCE
             if (temp != null) {
                 return temp
             }

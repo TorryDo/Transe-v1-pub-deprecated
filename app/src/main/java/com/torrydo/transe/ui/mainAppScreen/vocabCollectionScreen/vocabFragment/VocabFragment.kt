@@ -95,7 +95,7 @@ class VocabFragment : BaseFragment<VocabCollectionViewModel, FragmentVocabBindin
 
         override fun update(vocab: Vocab) {
             activityViewModel.updateVocab(vocab)
-            viewModel.updateVocabFromRemoteDB(vocab)
+            viewModel.updateVocabToRemoteDB(vocab)
 
             Utils.showShortToast(requireContext(), "working on it")
         }

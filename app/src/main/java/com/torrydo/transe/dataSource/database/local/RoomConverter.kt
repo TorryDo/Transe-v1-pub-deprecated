@@ -22,6 +22,16 @@ class RoomConverter {
         return CONSTANT.moshi.adapter<List<SearchResult>>(type).fromJson(inputString)
     }
 
+
+    @TypeConverter
+    fun toDate(dateLong: Long) = Date(dateLong)
+
+    @TypeConverter
+    fun fromDate(date: Date): Long = date.time
+
+}
+
+
 //    @TypeConverter
 //    inline fun <reified T> fromListToJson(mList: List<T>): String {
 //    val type = Types.newParameterizedType(List::class.java, T::class.java)
@@ -34,15 +44,3 @@ class RoomConverter {
 //        val type = Types.newParameterizedType(List::class.java, T::class.java)
 //        return CONSTANT.moshi.adapter<List<T>>(type).fromJson(mStr)
 //    }
-
-    @TypeConverter
-    fun toDate(dateLong: Long): Date {
-        return Date(dateLong)
-    }
-
-    @TypeConverter
-    fun fromDate(date: Date): Long {
-        return date.time;
-    }
-
-}

@@ -128,12 +128,8 @@ class VocabCollectionFragment :
             ) { position ->
                 when (position) {
                     0 -> {
-                        if (vocabListOfficial.isNotEmpty()) {
-                            viewModel.insertAllToRemoteDatabase(vocabListOfficial)
-                        } else {
-                            Utils.showShortToast(requireContext(), "không có gì sao upload?")
-                        }
-
+                        Utils.showShortToast(requireContext(), "uploading")
+                        viewModel.uploadAllVocabToRemoteDB()
                     }
                     1 -> {
                         Utils.showLongToast(requireContext(), "syncing")
@@ -211,7 +207,7 @@ class VocabCollectionFragment :
 
         override fun update(vocab: Vocab) {
             activityViewModel.updateVocab(vocab)
-            viewModel.updateVocabFromRemoteDB(vocab)
+            viewModel.updateVocabToRemoteDB(vocab)
 
             update2VocabListState()
 

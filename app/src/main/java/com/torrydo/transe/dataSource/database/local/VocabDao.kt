@@ -8,17 +8,13 @@ import com.torrydo.transe.dataSource.database.local.models.Vocab
 @Dao
 interface VocabDao {
 
+    // ------------------------- BASIC CRUD --------------------------------
+
     @Query("SELECT * FROM $VOCAB_TABLE_NAME")
     fun getAll(): List<Vocab>
 
     @Query("SELECT * FROM $VOCAB_TABLE_NAME")
     fun getAllLiveData(): LiveData<List<Vocab>>
-
-    @Query("SELECT * FROM $VOCAB_TABLE_NAME ORDER BY RANDOM() LIMIT 1")
-    fun getRandomVocab() : Vocab
-
-    @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE vocab LIKE :keyword limit 1")
-    fun loadVocabByKeyword(keyword : String) : Vocab?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVocab(vocab: Vocab)
@@ -35,6 +31,13 @@ interface VocabDao {
     @Query("DELETE FROM $VOCAB_TABLE_NAME")
     fun deleteAll()
 
+    // ----------------------------------------------------------------------
+
+    @Query("SELECT * FROM $VOCAB_TABLE_NAME WHERE vocab LIKE :keyword limit 1")
+    fun loadVocabByKeyword(keyword : String) : Vocab?
+
+    @Query("SELECT * FROM $VOCAB_TABLE_NAME ORDER BY RANDOM() LIMIT 1")
+    fun getRandomVocab() : Vocab
 
 }
 

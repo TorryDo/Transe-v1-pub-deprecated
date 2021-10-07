@@ -1,6 +1,6 @@
 package com.torrydo.transe.dataSource.database
 
-import com.torrydo.transe.dataSource.database.remote.BaseVocab
+import com.torrydo.transe.dataSource.database.remote.models.BaseVocab
 import com.torrydo.transe.interfaces.ListResultListener
 import com.torrydo.transe.interfaces.ResultListener
 

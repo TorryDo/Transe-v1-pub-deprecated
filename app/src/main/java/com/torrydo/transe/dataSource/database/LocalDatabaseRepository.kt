@@ -13,7 +13,7 @@ interface LocalDatabaseRepository {
     suspend fun update(vocab: Vocab)
     suspend fun delete(vocab: Vocab)
     suspend fun deleteAll()
-    suspend fun get(keyWord: String, isReady: (vocab: Vocab?) -> Unit)
+    suspend fun loadVocabByKeyword(keyWord: String) : Vocab?
     suspend fun getAll(): List<Vocab>
 
     suspend fun getAllLiveData(): LiveData<List<Vocab>>
