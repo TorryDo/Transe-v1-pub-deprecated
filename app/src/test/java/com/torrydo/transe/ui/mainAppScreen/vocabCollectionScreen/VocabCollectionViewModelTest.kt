@@ -5,6 +5,4 @@ import org.junit.Test
 
 class VocabCollectionViewModelTest{
 
-
-
 }
