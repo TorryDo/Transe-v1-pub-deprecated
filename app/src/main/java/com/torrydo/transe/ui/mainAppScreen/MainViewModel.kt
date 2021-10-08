@@ -24,7 +24,6 @@ class MainViewModel @Inject constructor(
 
     var TAB_POSITION = 0
 
-
     var vocabLiveData: LiveData<List<Vocab>> = MutableLiveData()
 
     var vocabListNotFinished = MutableLiveData<List<Vocab>>()
@@ -34,15 +33,13 @@ class MainViewModel @Inject constructor(
         getVocabLiveData()
     }
 
-    private fun getVocabLiveData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            vocabLiveData = localDatabaseRepository.getAllLiveData()
-        }
+    private fun getVocabLiveData() = viewModelScope.launch(Dispatchers.IO)
+    {
+        vocabLiveData = localDatabaseRepository.getAllLiveData()
     }
 
-    fun set2VocabList(
-        isReady: () -> Unit
-    ) {
+
+    fun set2VocabList(isReady: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             vocabLiveData.value?.let { vl ->
 
@@ -60,9 +57,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    fun shuffle2VocabList(
-        isReady: () -> Unit
-    ) {
+    fun shuffle2VocabList(isReady: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
 
             vocabLiveData.value?.let { vl ->
@@ -79,17 +74,14 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun updateVocab(vocab: Vocab) {
-        viewModelScope.launch(Dispatchers.IO) {
-            localDatabaseRepository.update(vocab)
-        }
+
+    fun updateVocab(vocab: Vocab) = viewModelScope.launch(Dispatchers.IO)
+    {
+        localDatabaseRepository.update(vocab)
     }
 
-    fun deleteVocab(vocab: Vocab) {
-        viewModelScope.launch(Dispatchers.IO) {
-            localDatabaseRepository.delete(vocab)
-        }
+    fun deleteVocab(vocab: Vocab) = viewModelScope.launch(Dispatchers.IO)
+    {
+        localDatabaseRepository.delete(vocab)
     }
-
-
 }

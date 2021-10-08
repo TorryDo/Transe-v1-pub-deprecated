@@ -70,25 +70,19 @@ class VocabCollectionViewModel @Inject constructor(
                 override fun <T> onSuccess(dataList: List<T>) {
                     if (dataList.isNotEmpty() && dataList[0] is BaseVocab) {
 
-                        val baseVocabList = dataList as List<BaseVocab>
-
-                        val differenceVocabList = getDifferentElements(vocabList, baseVocabList)
-
-                        var count = 0
                         viewModelScope.launch(Dispatchers.IO) {
+                            val BASE_VOCAB_LIST = dataList as List<BaseVocab>
 
-                            differenceVocabList.forEach { baseVocab ->
+                            getDifferentElements(vocabList, BASE_VOCAB_LIST).forEach { baseVocab ->
                                 baseVocab.toVocab { vocab ->
                                     viewModelScope.launch(Dispatchers.IO) {
                                         localDatabaseRepository.insert(vocab)
-                                        count++
                                     }
                                 }
                             }
 
-                            if (count >= baseVocabList.size - 1) {
-                                isFinished()
-                            }
+                            isFinished()
+
                         }
 
 
