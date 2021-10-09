@@ -36,6 +36,7 @@ class VocabCollectionFragment :
 
     companion object {
         var TAB_FINISHED = false
+        var ENABLE_CHANGE_TAB_SHUFFLE = true // read line 213
         var IS_SHUFFLED_AT_FIRST_TIME = false
 
         private var placeHoderListVocab = ArrayList<Vocab>()
@@ -52,7 +53,6 @@ class VocabCollectionFragment :
 
     // Variable ---
     private var mAdapterVocab: GenericAdapter<Vocab>? = null
-
 
 
     override fun getViewModelClass() = mViewModel
@@ -101,6 +101,9 @@ class VocabCollectionFragment :
         }
 
         binding.vocabMainTextType.setOnClickListener {
+
+            ENABLE_CHANGE_TAB_SHUFFLE = false // must be placed at top of this lambda
+
             if (TAB_FINISHED) {
                 TAB_FINISHED = false
                 binding.vocabMainTextType.text = "Not Finished"
@@ -187,7 +190,8 @@ class VocabCollectionFragment :
             }
         }
     }
-    private fun updateShuffledItems(list: List<Vocab>){
+
+    private fun updateShuffledItems(list: List<Vocab>) {
         mAdapterVocab?.setItems(list)
         placeHoderListVocab = list as ArrayList<Vocab>
     }
@@ -210,20 +214,26 @@ class VocabCollectionFragment :
 
     private fun calcAndUpdateCollection(newList: List<Vocab>) {
 
+        if (newList.size < placeHoderListVocab.size && ENABLE_CHANGE_TAB_SHUFFLE) {
+            val minusItems = placeHoderListVocab.minus(newList);
+            placeHoderListVocab = placeHoderListVocab.minus(minusItems) as ArrayList<Vocab>
+            mAdapterVocab?.setItems(placeHoderListVocab)
+            return
+        }
+        ENABLE_CHANGE_TAB_SHUFFLE = true
+
         val newItems = newList.minus(placeHoderListVocab)
         Log.i(TAG, "newItems = ${newItems.size}")
 
-        if(newItems.isNullOrEmpty()) {
+        if (newItems.isNullOrEmpty()) {
             mAdapterVocab?.setItems(placeHoderListVocab)
-        }
-        else{
+        } else {
             newItems.plus(placeHoderListVocab)
             mAdapterVocab?.setItems(newItems)
 
             placeHoderListVocab = newItems as ArrayList<Vocab>
             Log.i(TAG, "placeholder = ${placeHoderListVocab.size}")
         }
-
 
 
     }
