@@ -1,4 +1,0 @@
-rootProject.name = "Transe"
-include ':app'
-include ':vocabSource'
-include ':imageSource'
