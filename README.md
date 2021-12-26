@@ -1,8 +1,7 @@
 # Transe
 
-## Developer
-
-> this
+## Note
+> this project only show the main module, sorry for the inconvenience
 
 ### Content
 
