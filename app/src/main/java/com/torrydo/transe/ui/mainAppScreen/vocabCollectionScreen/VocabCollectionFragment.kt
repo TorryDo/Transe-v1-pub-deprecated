@@ -1,7 +1,9 @@
 package com.torrydo.transe.ui.mainAppScreen.vocabCollectionScreen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -34,7 +36,13 @@ class VocabCollectionFragment :
 
     companion object {
         var TAB_FINISHED = false
+        var ENABLE_CHANGE_TAB_SHUFFLE = true // read line 213
+        var IS_SHUFFLED_AT_FIRST_TIME = false
+
+        private var placeHoderListVocab = ArrayList<Vocab>()
     }
+
+    private val TAG = "_TAG_VocabColFrag"
 
     @Inject
     @Named(CONSTANT.activityPopupMenuHelper)
@@ -43,13 +51,12 @@ class VocabCollectionFragment :
     private val activityViewModel: MainViewModel by activityViewModels()
     private val mViewModel: VocabCollectionViewModel by viewModels()
 
+    // Variable ---
     private var mAdapterVocab: GenericAdapter<Vocab>? = null
 
 
     override fun getViewModelClass() = mViewModel
     override fun getViewBinding() = FragmentVocabCollectionBinding.inflate(layoutInflater)
-
-
     override fun configOnCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,8 +85,6 @@ class VocabCollectionFragment :
                     ),
                     MyVocabListener()
                 )
-
-
         }
 
         binding.vocabRecycler.apply {
@@ -96,12 +101,15 @@ class VocabCollectionFragment :
         }
 
         binding.vocabMainTextType.setOnClickListener {
+
+            ENABLE_CHANGE_TAB_SHUFFLE = false // must be placed at top of this lambda
+
             if (TAB_FINISHED) {
                 TAB_FINISHED = false
                 binding.vocabMainTextType.text = "Not Finished"
 
                 activityViewModel.vocabListNotFinished.value?.let {
-                    updateListToAdapter(it)
+                    calcAndUpdateCollection(it)
                     return@setOnClickListener
                 }
                 Utils.showShortToast(requireContext(), "list null")
@@ -110,7 +118,7 @@ class VocabCollectionFragment :
                 binding.vocabMainTextType.text = "Finished"
 
                 activityViewModel.vocabListFinished.value?.let {
-                    updateListToAdapter(it)
+                    calcAndUpdateCollection(it)
                     return@setOnClickListener
                 }
                 Utils.showShortToast(requireContext(), "list null")
@@ -128,21 +136,15 @@ class VocabCollectionFragment :
             ) { position ->
                 when (position) {
                     0 -> {
-                        Utils.showShortToast(requireContext(), "uploading")
                         viewModel.uploadAllVocabToRemoteDB()
                     }
                     1 -> {
-                        Utils.showLongToast(requireContext(), "syncing")
                         viewModel.syncAllVocabFromRemoteDatabase(vocabListOfficial) {
-                            Utils.showShortToast(requireContext(), "fck you")
+                            Utils.showShortToast(requireContext(), "synced")
                         }
-
                     }
                     2 -> {
-                        activityViewModel.shuffle2VocabList() {
-                            update2VocabListState()
-                            Utils.showShortToast(requireContext(), "Updated")
-                        }
+                        shuffleCollection()
                     }
                 }
             }
@@ -157,32 +159,86 @@ class VocabCollectionFragment :
             }
             vocabListOfficial.addAll(vl)
 
-            activityViewModel.set2VocabList() {  // when IO Thread finished it's work
-                update2VocabListState()
+            if (!IS_SHUFFLED_AT_FIRST_TIME) { // first time app launch
+                shuffleCollection()
+                IS_SHUFFLED_AT_FIRST_TIME = true
+            } else {
+                activityViewModel.set2VocabList() {  // when IO Thread finished it's work
+                    update2VocabListState()
+                }
             }
+
 
         })
     }
 
-    private fun update2VocabListState() {
-        if (TAB_FINISHED) {
-            binding.vocabMainTextType.text = "Finished"
-            activityViewModel.vocabListFinished.value?.let {
-                updateListToAdapter(it)
-            }
-        } else {
-            binding.vocabMainTextType.text = "Not Finished"
-            activityViewModel.vocabListNotFinished.value?.let {
-                updateListToAdapter(it)
+    // MODIFIABLE FUNCTION ---
+
+    @SuppressLint("SetTextI18n")
+    private fun shuffleCollection() {
+        activityViewModel.shuffle2VocabList() {
+            if (TAB_FINISHED) {
+                binding.vocabMainTextType.text = "Finished"
+                activityViewModel.vocabListFinished.value?.let {
+                    updateShuffledItems(it)
+                }
+            } else {
+                binding.vocabMainTextType.text = "Not Finished"
+                activityViewModel.vocabListNotFinished.value?.let {
+                    updateShuffledItems(it)
+                }
             }
         }
     }
 
-    private fun updateListToAdapter(list: List<Vocab>) {
+    private fun updateShuffledItems(list: List<Vocab>) {
         mAdapterVocab?.setItems(list)
+        placeHoderListVocab = list as ArrayList<Vocab>
     }
 
-    // --------------------------------------------------------
+    @SuppressLint("SetTextI18n")
+    private fun update2VocabListState() {
+        if (TAB_FINISHED) {
+            binding.vocabMainTextType.text = "Finished"
+            activityViewModel.vocabListFinished.value?.let {
+                calcAndUpdateCollection(it)
+            }
+        } else {
+            binding.vocabMainTextType.text = "Not Finished"
+            activityViewModel.vocabListNotFinished.value?.let {
+                calcAndUpdateCollection(it)
+            }
+        }
+    }
+
+
+    private fun calcAndUpdateCollection(newList: List<Vocab>) {
+
+        if (newList.size < placeHoderListVocab.size && ENABLE_CHANGE_TAB_SHUFFLE) {
+            val minusItems = placeHoderListVocab.minus(newList);
+            placeHoderListVocab = placeHoderListVocab.minus(minusItems) as ArrayList<Vocab>
+            mAdapterVocab?.setItems(placeHoderListVocab)
+            return
+        }
+        ENABLE_CHANGE_TAB_SHUFFLE = true
+
+        val newItems = newList.minus(placeHoderListVocab)
+        Log.i(TAG, "newItems = ${newItems.size}")
+
+        if (newItems.isNullOrEmpty()) {
+            mAdapterVocab?.setItems(placeHoderListVocab)
+        } else {
+            newItems.plus(placeHoderListVocab)
+            mAdapterVocab?.setItems(newItems)
+
+            placeHoderListVocab = newItems as ArrayList<Vocab>
+            Log.i(TAG, "placeholder = ${placeHoderListVocab.size}")
+        }
+
+
+    }
+
+    // CONCRETE FUNCTION ---------------------------------------------------
 
     private fun startService() {
         val intent = Intent(requireContext(), LauncherSearchService::class.java).apply {

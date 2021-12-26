@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class GenericAdapter<T>(listItems: List<T>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var listItems: List<T>
+    private var listItems: List<T>
 
     init {
         this.listItems = listItems ?: emptyList()
@@ -17,6 +17,7 @@ abstract class GenericAdapter<T>(listItems: List<T>?) :
         this.listItems = listItems
         notifyDataSetChanged()
     }
+    fun getCurrentItems() = listItems
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return getViewHolder(parent, viewType)
