@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <dimen name="view_trans_height">420dp</dimen>
     <dimen name="view_trans_backicon_medium">24dp</dimen>
     <dimen name="view_trans_backicon_big">30dp</dimen>
