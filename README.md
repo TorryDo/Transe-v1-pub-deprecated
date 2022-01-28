@@ -1,7 +1,5 @@
-# Transe
-
 ## Note
-> this project only show the main module, sorry for the inconvenience
+> <b> this project only show the main module, sorry for the inconvenience <b>
 
 ### Content
 
@@ -15,11 +13,11 @@ I. Features
 II. Technologies
 
 - Kotlin coroutines
-- Firebase DB | Room DB
+- Firebase DB | Room DB (SQLite)
 - Android Jetpack
 - Dagger Hilt
-- Lifecycle/Activity Components library
-- Moshi + Retrofit library
+- Lifecycle/Activity Components
+- Retrofit for calling api
 - Lottie library
 - Jsoup Library
 
@@ -27,13 +25,15 @@ III. Time Consuming
 
 - Jun - Aug 2021
 
-IV. Screenshots
+IV. Demo
+
+
 
 - floating bubble </br> </br>
-  <img src="preview_image/bubble.png">
+  <img src="art/bubble.png">
 
 - home screen </br> </br>
-  <img src="preview_image/homeScreen.png">
+  <img src="art/homeScreen.png">
 
 - vocab details </br> </br>
-  <img src="preview_image/vocabDetail.png">
+  <img src="art/vocabDetail.png">
