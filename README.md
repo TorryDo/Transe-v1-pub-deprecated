@@ -1,5 +1,5 @@
 ## Note
-### <b> this project only show the main module, sorry for the inconvenience! <b>
+### <b> this project is deprecated, you should not see the source code for the sake of humanity <b>
 </br>
   
 ## Content
