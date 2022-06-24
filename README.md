@@ -1,4 +1,4 @@
-## Note
+## DEPRECATED
 ### <b> this project is deprecated, you should not see the source code for the sake of humanity <b>
 </br>
   
